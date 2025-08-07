@@ -2,4 +2,8 @@
   <PropertyGroup>
     <TargetFramework>net472</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="code_core\components\" />
+    <Folder Include="code_core\spawners\" />
+  </ItemGroup>
 </Project>
