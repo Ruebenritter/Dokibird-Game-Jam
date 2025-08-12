@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4kub8rlpihpx"
-path="res://.godot/imported/DokiBird Panorama Proto.png-202647006eb795965411d33c0b909e6e.ctex"
+uid="uid://bhe8pprcmop44"
+path="res://.godot/imported/Dart Proto.png-f2799c28f55ff93959c1e1a8b5ef9edb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/backgrounds/DokiBird Panorama Proto.png"
-dest_files=["res://.godot/imported/DokiBird Panorama Proto.png-202647006eb795965411d33c0b909e6e.ctex"]
+source_file="res://assets/prop_sprites/Dart Proto.png"
+dest_files=["res://.godot/imported/Dart Proto.png-f2799c28f55ff93959c1e1a8b5ef9edb.ctex"]
 
 [params]
 

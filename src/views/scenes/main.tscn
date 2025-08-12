@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8wkxadncgbfk"]
+
+[ext_resource type="Script" uid="uid://bvvjwsf1d0fxl" path="res://view_models/main.gd" id="1_ix16s"]
+[ext_resource type="PackedScene" uid="uid://c20f0w8iuf7v6" path="res://views/prefabs/crosshair_sprite.tscn" id="2_ny5kc"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ix16s"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ix16s")
+cursor_scene = ExtResource("2_ny5kc")
+
+[node name="Frame" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ix16s")
+
+[node name="BackgroundTexture" type="TextureRect" parent="Frame"]
+layout_mode = 2
+
+[node name="MainCamera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD"]
+self_modulate = Color(1, 1, 0.941176, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
