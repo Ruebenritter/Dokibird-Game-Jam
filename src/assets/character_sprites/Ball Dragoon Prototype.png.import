@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlvqs3ei2s3wf"
-path="res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"
+uid="uid://ct7v11uemwvxp"
+path="res://.godot/imported/Ball Dragoon Prototype.png-fab7e3d0a952a3f044e2b922b8571e4c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/icon.png"
-dest_files=["res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"]
+source_file="res://assets/character_sprites/Ball Dragoon Prototype.png"
+dest_files=["res://.godot/imported/Ball Dragoon Prototype.png-fab7e3d0a952a3f044e2b922b8571e4c.ctex"]
 
 [params]
 

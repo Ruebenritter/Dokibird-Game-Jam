@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlvqs3ei2s3wf"
-path="res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"
+uid="uid://b7hrx0hyxt52a"
+path="res://.godot/imported/Egg Dragoon Proto.png-8a9cef0d3447f78f556ea024bf1a6006.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/icon.png"
-dest_files=["res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"]
+source_file="res://assets/character_sprites/Egg Dragoon Proto.png"
+dest_files=["res://.godot/imported/Egg Dragoon Proto.png-8a9cef0d3447f78f556ea024bf1a6006.ctex"]
 
 [params]
 
