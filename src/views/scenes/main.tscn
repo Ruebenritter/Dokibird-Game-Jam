@@ -155,9 +155,10 @@ mouse_filter = 2
 [node name="BirdControl" type="Node2D" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_l10sc")
+background = NodePath("../Frame/BackgroundTexture")
 egg_bird_scene = ExtResource("5_pgnnd")
 
 [node name="egg" parent="BirdControl" instance=ExtResource("5_pgnnd")]
-position = Vector2(719, 920)
+position = Vector2(713, 493)
 speed = 0
 distance_level = 10

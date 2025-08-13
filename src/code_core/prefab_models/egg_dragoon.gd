@@ -1,9 +1,10 @@
 extends Node2D
 
+signal shot
 
 @export var speed := Enums.speed_level.Normal
 @export var dragoon_type: Enums.dragoon_type = Enums.dragoon_type.Egg
-@export var distance_level: Enums.distance_level = Enums.distance_level.close
+@export var distance_level: Enums.distance_level = Enums.distance_level.Close
 
 var _min_x := -INF
 var _max_x := INF
@@ -80,9 +81,11 @@ func _on_head_area_input_event(viewport: Node, event: InputEvent, _shape_idx: in
 
 func handle_headshot() -> void:
 	print("Headshot detected on dragoon of type: ", dragoon_type)
+	shot.emit(self, Enums.hit_zone.Head)
 
 func handle_body_shot() -> void:
 	print("Body shot detected on dragoon of type: ", dragoon_type)
+	shot.emit(self, Enums.hit_zone.Body)
 
 func _start_resolve() -> void:
 	if not resolve_timer.is_stopped():

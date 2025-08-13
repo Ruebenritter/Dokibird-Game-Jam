@@ -18,14 +18,27 @@ enum dragoon_type {
 }
 
 enum distance_level {
-	close = 5,
-	near = 10,
-	middle = 15,
-	far = 20,
-	distant = 25,
+	Close = 5,
+	Near = 10,
+	Mid = 15,
+	Far = 20,
+	Distant = 25,
 }
 
 enum hit_zone {
 	Head,
 	Body,
+}
+
+enum ground_levels {
+	ForeGround = 950,
+	MidGround = 900,
+	BackGround = 850,
+}
+
+enum fly_zone_lane {
+	Hover = 750,
+	Jump = 700,
+	HighRise = 400,
+	Fly = 250,
 }
