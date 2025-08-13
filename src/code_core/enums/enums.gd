@@ -24,3 +24,8 @@ enum distance_level {
 	far = 20,
 	distant = 25,
 }
+
+enum hit_zone {
+	Head,
+	Body,
+}

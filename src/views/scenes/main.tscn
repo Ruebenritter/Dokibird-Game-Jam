@@ -60,18 +60,22 @@ mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDFrame"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="LeftSplit" type="VBoxContainer" parent="HUD/HUDFrame/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="TopLeft" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit/TopLeft"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 8
 
@@ -89,23 +93,28 @@ vertical_alignment = 1
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="RightSplit" type="VBoxContainer" parent="HUD/HUDFrame/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="TopRight" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="BottomRight" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 100
 theme_override_constants/margin_top = 300
 theme_override_constants/margin_right = 32
@@ -114,27 +123,34 @@ theme_override_constants/margin_bottom = 32
 [node name="AmmoContainer" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer"]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ny5kc")
 
 [node name="AmmoRow" type="HBoxContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 2
 alignment = 2
 
 [node name="dart" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="dart2" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="dart3" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="dart4" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="dart5" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="BirdControl" type="Node2D" parent="."]
 unique_name_in_owner = true
