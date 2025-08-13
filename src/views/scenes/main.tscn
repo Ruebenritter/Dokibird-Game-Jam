@@ -76,7 +76,7 @@ mouse_filter = 2
 [node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit/TopLeft"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 32
+theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 8
 
 [node name="TimeLabel" type="Label" parent="HUD/HUDFrame/HBoxContainer/LeftSplit/TopLeft/MarginContainer"]
@@ -86,8 +86,6 @@ size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "TIME LEFT LABEL"
 label_settings = SubResource("LabelSettings_dodr4")
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="BottomLeft" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit"]
 self_modulate = Color(1, 1, 1, 0)
@@ -105,6 +103,20 @@ self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/TopRight"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+
+[node name="ScoreLabel" type="Label" parent="HUD/HUDFrame/HBoxContainer/RightSplit/TopRight/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "SCORE LABEL"
+label_settings = SubResource("LabelSettings_dodr4")
 
 [node name="BottomRight" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit"]
 self_modulate = Color(1, 1, 1, 0)

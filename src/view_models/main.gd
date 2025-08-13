@@ -40,6 +40,7 @@ func _ready() -> void:
 	add_child(_countdownTimer)
 
 	%TimeLabel.text = format_time(countdown_time_seconds)
+	%ScoreLabel.text = "0"
 
 
 func _process(delta: float) -> void:
@@ -83,6 +84,7 @@ func _fire_once() -> void:
 
 	var count = %AmmoRow.get_child_count()
 	if count == 0:
+		%BirdControl.set_can_shoot(false)
 		return
 
 	var last = %AmmoRow.get_child(count - 1) as Dart
@@ -96,6 +98,7 @@ func _reload() -> void:
 		return
 
 	_reloading = true
+	%BirdControl.set_can_shoot(false)
 	
 	_clear_ammo_items()
 
@@ -115,6 +118,7 @@ func _reload() -> void:
 
 	_last_round.stop_blinking()
 	_reloading = false
+	%BirdControl.set_can_shoot(true)
 
 func _clear_ammo_items() -> void:
 	var children = %AmmoRow.get_children()

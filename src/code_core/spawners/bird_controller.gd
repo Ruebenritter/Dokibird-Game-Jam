@@ -14,6 +14,8 @@ var background_bounds: Rect2
 var _min_x := -INF
 var _max_x := INF
 
+var _can_shoot := true
+
 func _ready() -> void:
 	# Initialize bird spawners or any other setup needed
 	if not background.is_empty():
@@ -27,7 +29,15 @@ func _ready() -> void:
 
 	print("Background bounds: ", background_bounds)
 	randomize()
-	spaw_bird(Enums.dragoon_type.Egg, Enums.distance_level.Close, Enums.speed_level.Normal)
+
+	for i in range(10): # Spawning 10 birds as an example
+		# Randomly choose dragoon type, distance level, and speed level
+		#var dragoon_type: Enums.dragoon_type = Enums.dragoon_type.values()[randi() % 4] # 0 to 3 for Egg, Neck, Ball, Chonky
+		var distance_level: Enums.distance_level = Enums.distance_level.values()[randi() % 5] # 0 to 4 for Close, Near, Mid, Far, Distant
+		var speed_level: Enums.speed_level = Enums.speed_level.values()[randi() % 5] # 0 to 4 for Idle, Slow, Normal, Fast, VeryFast
+
+		# Spawn the bird with the chosen parameters
+		spaw_bird(Enums.dragoon_type.Egg, distance_level, speed_level)
 
 # get a reference to background texture 
 # -> size determines spawn zones
@@ -78,9 +88,16 @@ func spaw_bird(dragoon_t, distance_t, speed_t) -> Node2D:
 
 
 func _on_bird_shot(bird: Node2D, hit_zone: Enums.hit_zone) -> void:
+	if !_can_shoot:
+		print("Cannot shoot, reloading or not allowed.")
+		return
 	if hit_zone == Enums.hit_zone.Head:
 		bird.queue_free()
 	elif hit_zone == Enums.hit_zone.Body:
 		pass
 	else:
 		print("Unknown hit zone: ", hit_zone)
+
+func set_can_shoot(value: bool) -> void:
+	_can_shoot = value
+	print("Can shoot set to: ", _can_shoot)
