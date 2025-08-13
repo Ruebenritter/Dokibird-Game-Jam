@@ -1,17 +1,65 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://c6538danno6b5"]
 
-[ext_resource path="res://code_core/prefab_models/EggDragoon.cs" type="Script" id=1]
-[ext_resource path="res://views/components/DistanceComponent.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/character_sprites/Egg Dragoon Proto.png" type="Texture2D" id=3]
+[ext_resource type="Script" uid="uid://dc1necf2xif6v" path="res://code_core/prefab_models/egg_dragoon.gd" id="1_dhytj"]
+[ext_resource type="Texture2D" uid="uid://b7hrx0hyxt52a" path="res://assets/character_sprites/Egg Dragoon Proto.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://cknd1eba4e5r3" path="res://assets/character_sprites/egg_bird_pixel_proto.png" id="4_ed0gj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rn24i"]
+atlas = ExtResource("4_ed0gj")
+region = Rect2(0, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uwosa"]
+atlas = ExtResource("4_ed0gj")
+region = Rect2(256, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emhvc"]
+atlas = ExtResource("4_ed0gj")
+region = Rect2(512, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qi1sy"]
+atlas = ExtResource("4_ed0gj")
+region = Rect2(768, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y84fm"]
+atlas = ExtResource("4_ed0gj")
+region = Rect2(1024, 0, 256, 256)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7qivt"]
+atlas = ExtResource("4_ed0gj")
+region = Rect2(1280, 0, 256, 256)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8c4ow"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rn24i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uwosa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emhvc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qi1sy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y84fm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7qivt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
 
 [node name="egg" type="Node2D"]
-position = Vector2( 100, 200 )
-script = ExtResource( 1 )
-DragoonTexturePath = NodePath("TextureRect")
-HeadHitboxPath = NodePath("HeadArea")
-BodyHitboxPath = NodePath("BodyArea")
+script = ExtResource("1_dhytj")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -20,18 +68,23 @@ offset_left = -50.0
 offset_top = -100.0
 offset_right = 50.0
 mouse_filter = 2
-texture = ExtResource( 3 )
+texture = ExtResource("3")
 
 [node name="HeadArea" type="Area2D" parent="."]
+unique_name_in_owner = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea"]
-position = Vector2( 1, 0 )
-polygon = PackedVector2Array( -27, -72, -16, -86, 0, -93, 15, -86, 26, -70, 0, -64 )
+position = Vector2(1, 0)
+polygon = PackedVector2Array(-27, -72, -16, -86, 0, -93, 15, -86, 26, -70, 0, -64)
 
 [node name="BodyArea" type="Area2D" parent="."]
+unique_name_in_owner = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BodyArea"]
-position = Vector2( 1, 1 )
-polygon = PackedVector2Array( 25, -71, 30, -53, 26, -35, 15, -22, 0, -18, -18, -22, -28, -35, -32, -51, -26, -72, -3, -78 )
+position = Vector2(1, 1)
+polygon = PackedVector2Array(25, -71, 30, -53, 26, -35, 15, -22, 0, -18, -18, -22, -28, -35, -32, -51, -26, -72, -3, -78)
 
-[node name="c_distance" parent="." instance=ExtResource( 2 )]
+[node name="BirdAnim" type="AnimatedSprite2D" parent="."]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_8c4ow")
+frame_progress = 0.146571

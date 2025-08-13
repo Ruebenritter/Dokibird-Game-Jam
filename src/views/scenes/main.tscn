@@ -1,10 +1,18 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8wkxadncgbfk"]
+[gd_scene load_steps=10 format=3 uid="uid://b8wkxadncgbfk"]
 
 [ext_resource type="Script" uid="uid://bvvjwsf1d0fxl" path="res://view_models/main.gd" id="1_ix16s"]
 [ext_resource type="PackedScene" uid="uid://c20f0w8iuf7v6" path="res://views/prefabs/crosshair_sprite.tscn" id="2_ny5kc"]
+[ext_resource type="PackedScene" uid="uid://b4bknfn3moohs" path="res://views/prefabs/dart.tscn" id="3_dif2r"]
+[ext_resource type="Texture2D" uid="uid://c7y4pc4ldltng" path="res://assets/backgrounds/Dokibird_Game_Jam_rough_for_leon_hd.png" id="4_dodr4"]
+[ext_resource type="Script" uid="uid://dlam6eqwfhsur" path="res://code_core/spawners/bird_controller.gd" id="5_l10sc"]
+[ext_resource type="PackedScene" uid="uid://c6538danno6b5" path="res://views/prefabs/egg_dragoon.tscn" id="5_pgnnd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ix16s"]
-bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_dodr4"]
+font_size = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny5kc"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -13,8 +21,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 3
 script = ExtResource("1_ix16s")
 cursor_scene = ExtResource("2_ny5kc")
+ammo_scene = ExtResource("3_dif2r")
+camera_pan_speed = 300.0
 
 [node name="Frame" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -24,17 +36,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_ix16s")
 
 [node name="BackgroundTexture" type="TextureRect" parent="Frame"]
+unique_name_in_owner = true
 layout_mode = 2
+texture = ExtResource("4_dodr4")
 
 [node name="MainCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
-[node name="PanelContainer" type="PanelContainer" parent="HUD"]
+[node name="HUDFrame" type="PanelContainer" parent="HUD"]
 self_modulate = Color(1, 1, 0.941176, 0)
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,3 +57,91 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDFrame"]
+layout_mode = 2
+
+[node name="LeftSplit" type="VBoxContainer" parent="HUD/HUDFrame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopLeft" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit/TopLeft"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 8
+
+[node name="TimeLabel" type="Label" parent="HUD/HUDFrame/HBoxContainer/LeftSplit/TopLeft/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "TIME LEFT LABEL"
+label_settings = SubResource("LabelSettings_dodr4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BottomLeft" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="RightSplit" type="VBoxContainer" parent="HUD/HUDFrame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TopRight" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BottomRight" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight"]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 300
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="AmmoContainer" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ny5kc")
+
+[node name="AmmoRow" type="HBoxContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+alignment = 2
+
+[node name="dart" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
+layout_mode = 2
+
+[node name="dart2" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
+layout_mode = 2
+
+[node name="dart3" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
+layout_mode = 2
+
+[node name="dart4" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
+layout_mode = 2
+
+[node name="dart5" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer/AmmoRow" instance=ExtResource("3_dif2r")]
+layout_mode = 2
+
+[node name="BirdControl" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_l10sc")
+egg_bird_scene = ExtResource("5_pgnnd")
+
+[node name="egg" parent="BirdControl" instance=ExtResource("5_pgnnd")]
+position = Vector2(719, 920)
+speed = 0
+distance_level = 10

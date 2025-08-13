@@ -20,6 +20,12 @@ config/icon="res://assets/icons/icon.png"
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 
+[file_customization]
+
+folder_colors={
+"res://assets/": "yellow"
+}
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

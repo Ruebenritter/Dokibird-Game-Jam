@@ -3,11 +3,11 @@ extends Node
 class_name Enums
 
 enum speed_level {
-	Idle,
-	Slow,
-	Normal,
-	Fast,
-	VeryFast
+	Idle = 0,
+	Slow = 100,
+	Normal = 200,
+	Fast = 300,
+	VeryFast = 400
 }
 
 enum dragoon_type {
