@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlvqs3ei2s3wf"
-path="res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"
+uid="uid://b88v3peheopr1"
+path="res://.godot/imported/Dokibird_Game_Jam_rough_for_leon.png-d5c0b6c1bb6a8533f6a9ff27c4bc0547.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/icon.png"
-dest_files=["res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"]
+source_file="res://assets/backgrounds/Dokibird_Game_Jam_rough_for_leon.png"
+dest_files=["res://.godot/imported/Dokibird_Game_Jam_rough_for_leon.png-d5c0b6c1bb6a8533f6a9ff27c4bc0547.ctex"]
 
 [params]
 

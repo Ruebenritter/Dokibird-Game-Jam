@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlvqs3ei2s3wf"
-path="res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"
+uid="uid://4w04pfi8ja1r"
+path="res://.godot/imported/Neck Dragoon Proto.png-00cae496f50c90ba5254cb2da6b2e2df.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/icon.png"
-dest_files=["res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"]
+source_file="res://assets/character_sprites/Neck Dragoon Proto.png"
+dest_files=["res://.godot/imported/Neck Dragoon Proto.png-00cae496f50c90ba5254cb2da6b2e2df.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dlvqs3ei2s3wf"
-path="res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"
+uid="uid://bhe8pprcmop44"
+path="res://.godot/imported/Dart Proto.png-f2799c28f55ff93959c1e1a8b5ef9edb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/icons/icon.png"
-dest_files=["res://.godot/imported/icon.png-816117353ba57afc3af521f78eedcc3c.ctex"]
+source_file="res://assets/prop_sprites/Dart Proto.png"
+dest_files=["res://.godot/imported/Dart Proto.png-f2799c28f55ff93959c1e1a8b5ef9edb.ctex"]
 
 [params]
 

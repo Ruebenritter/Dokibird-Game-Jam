@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://code_core/components/DistanceComponent.cs" type="Script" id=1]
+
+[node name="c_distance" type="Node2D"]
+script = ExtResource( 1 )
