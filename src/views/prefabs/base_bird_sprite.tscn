@@ -1,6 +1,9 @@
-[gd_scene format=3 uid="uid://rd67unskufc0"]
+[gd_scene load_steps=2 format=3 uid="uid://rd67unskufc0"]
+
+[ext_resource type="Script" uid="uid://cslkh4vlf8fih" path="res://code_core/prefab_models/base_bird_sprite.gd" id="1_uxhhu"]
 
 [node name="BirdSprite" type="AnimatedSprite2D"]
+script = ExtResource("1_uxhhu")
 
 [node name="HeadArea" type="Area2D" parent="."]
 unique_name_in_owner = true
