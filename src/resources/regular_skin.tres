@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BirdSkin" load_steps=5 format=3 uid="uid://bollx5ole8oo2"]
+
+[ext_resource type="Texture2D" uid="uid://8rh2dhrq26an" path="res://assets/character_sprites/regular_fly1.png" id="1_0tiat"]
+[ext_resource type="Script" uid="uid://bwphr4b5lwnbu" path="res://code_core/data/bird_skin.gd" id="1_javt1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0dngo"]
+atlas = ExtResource("1_0tiat")
+region = Rect2(0, 0, 481, 470)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fmhpd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0dngo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_javt1")
+type = 2
+frames = SubResource("SpriteFrames_fmhpd")
+is_flightless = false
+scale = Vector2(1, 1)
+metadata/_custom_type_script = "uid://bwphr4b5lwnbu"

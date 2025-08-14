@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BirdSkin" load_steps=5 format=3 uid="uid://br6t6cxq0b65r"]
+
+[ext_resource type="Script" uid="uid://bwphr4b5lwnbu" path="res://code_core/data/bird_skin.gd" id="1_b071u"]
+[ext_resource type="Texture2D" uid="uid://bmixx1vwarp4q" path="res://assets/character_sprites/chonky_idle1.png" id="1_evn6s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpdao"]
+atlas = ExtResource("1_evn6s")
+region = Rect2(0, 0, 863, 936)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ikem"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpdao")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_b071u")
+type = 3
+frames = SubResource("SpriteFrames_3ikem")
+is_flightless = true
+scale = Vector2(1, 1)
+metadata/_custom_type_script = "uid://bwphr4b5lwnbu"

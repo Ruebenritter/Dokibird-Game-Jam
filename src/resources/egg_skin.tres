@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BirdSkin" load_steps=5 format=3 uid="uid://dae230hf4khgi"]
+
+[ext_resource type="Texture2D" uid="uid://b7sykyfl18qth" path="res://assets/character_sprites/egg_walk1.png" id="1_68efc"]
+[ext_resource type="Script" uid="uid://bwphr4b5lwnbu" path="res://code_core/data/bird_skin.gd" id="1_iokje"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bvabn"]
+atlas = ExtResource("1_68efc")
+region = Rect2(0, 0, 307, 355)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2x8ny"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bvabn")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_iokje")
+type = 0
+frames = SubResource("SpriteFrames_2x8ny")
+is_flightless = true
+scale = Vector2(1, 1)
+metadata/_custom_type_script = "uid://bwphr4b5lwnbu"

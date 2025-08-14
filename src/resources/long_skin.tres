@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BirdSkin" load_steps=5 format=3 uid="uid://bt7kqlowh77av"]
+
+[ext_resource type="Texture2D" uid="uid://dd0es1ldolbgv" path="res://assets/character_sprites/long_fly1.png" id="1_h81px"]
+[ext_resource type="Script" uid="uid://bwphr4b5lwnbu" path="res://code_core/data/bird_skin.gd" id="1_ojskl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7sfss"]
+atlas = ExtResource("1_h81px")
+region = Rect2(0, 0, 484, 1007)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_d74dd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7sfss")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_ojskl")
+type = 1
+frames = SubResource("SpriteFrames_d74dd")
+is_flightless = false
+scale = Vector2(1, 1)
+metadata/_custom_type_script = "uid://bwphr4b5lwnbu"

@@ -23,7 +23,12 @@ window/size/viewport_height=1080
 [file_customization]
 
 folder_colors={
-"res://assets/": "yellow"
+"res://assets/": "yellow",
+"res://audio/": "green",
+"res://code_core/": "purple",
+"res://themes/": "pink",
+"res://view_models/": "teal",
+"res://views/": "blue"
 }
 
 [gui]

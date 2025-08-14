@@ -9,6 +9,8 @@ signal screen_visible
 @export var distance_level: Enums.distance_level = Enums.distance_level.Close
 @export var flightless_bird := false
 
+# ToDo: add image/sprite animation list to pick from depending on dragoon type
+
 var _map_border_left := -INF
 var _map_border_right := INF
 var _lane_y := 0.0

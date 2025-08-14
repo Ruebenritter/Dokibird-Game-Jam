@@ -1,8 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://rd67unskufc0"]
+[gd_scene load_steps=3 format=3 uid="uid://rd67unskufc0"]
 
 [ext_resource type="Script" uid="uid://cslkh4vlf8fih" path="res://code_core/prefab_models/base_bird_sprite.gd" id="1_uxhhu"]
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_uxhhu"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"chonky_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"egg_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"long_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"regular_idle",
+"speed": 5.0
+}]
+
 [node name="BirdSprite" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_uxhhu")
+animation = &"chonky_idle"
 script = ExtResource("1_uxhhu")
 
 [node name="HeadArea" type="Area2D" parent="."]
@@ -16,3 +41,8 @@ unique_name_in_owner = true
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BodyArea"]
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="input_event" from="HeadArea" to="." method="_on_head_area_input_event"]
+[connection signal="input_event" from="BodyArea" to="." method="_on_body_area_input_event"]
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
