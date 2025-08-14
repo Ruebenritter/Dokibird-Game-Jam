@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://rd67unskufc0"]
+
+[node name="BirdSprite" type="AnimatedSprite2D"]
+
+[node name="HeadArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea"]
+
+[node name="BodyArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BodyArea"]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]

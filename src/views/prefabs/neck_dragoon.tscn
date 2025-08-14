@@ -14,26 +14,32 @@ animations = [{
 "texture": SubResource("AtlasTexture_g60dq")
 }],
 "loop": false,
-"name": &"idle",
+"name": &"default",
 "speed": 5.0
 }]
 
 [node name="neck" type="AnimatedSprite2D"]
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_pumfm")
-animation = &"idle"
 script = ExtResource("2_g60dq")
 
 [node name="HeadArea" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea"]
-polygon = PackedVector2Array(44, 6, 70, 10, 78, 28, 88, 38, 84, 53, 55, 57, 23, 55, 9, 45, 12, 31, 25, 12)
+position = Vector2(-265, -529)
+scale = Vector2(4.38845, 5.88603)
+polygon = PackedVector2Array(70.1842, 2.8882, 72.9187, 12.0625, 82.945, 13.2517, 79.0712, 24.1249, 82.4893, 38.396, 73.3744, 49.2692, 61.5252, 56.4048, 33.2692, 55.7252, 1.82297, 38.2261, 12, 31, 21.192, 18.3485, 40.3332, 12.5721, 51.9546, 5.7764)
 
-[node name="HeadArea2" type="Area2D" parent="."]
+[node name="BodyArea" type="Area2D" parent="."]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea2"]
-polygon = PackedVector2Array(68, 170, 32, 171, 6, 152, 8, 120, 37, 93, 40, 55, 55, 56, 55, 84, 76, 115, 85, 143, 78, 164)
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BodyArea"]
+position = Vector2(-285, -322)
+scale = Vector2(6.14478, 4.10991)
+polygon = PackedVector2Array(59.2373, 169.59, 32, 171, 11.5545, 160.344, 11.5545, 130.416, 23.1091, 92.216, 27.0148, 61.5585, 27.0148, 27.9811, 48.4965, 29.9276, 44.1025, 59.3686, 46.3808, 97.5689, 61.3529, 98.2989, 67.3743, 115.088, 87.2285, 103.165, 85.7639, 139.176, 75.674, 158.884)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
+[connection signal="input_event" from="HeadArea" to="." method="_on_head_area_input_event"]
+[connection signal="input_event" from="BodyArea" to="." method="_on_body_area_input_event"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

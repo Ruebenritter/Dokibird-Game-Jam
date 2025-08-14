@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5u4cgp6o5bij"]
+
+[ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="1_hp30c"]
+[ext_resource type="Texture2D" uid="uid://cop1o0xfd2ghl" path="res://assets/character_sprites/regular_idle1.png" id="2_6pj52"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dplcn"]
+atlas = ExtResource("2_6pj52")
+region = Rect2(0, 0, 481, 470)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hgwja"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dplcn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BirdSprite" instance=ExtResource("1_hp30c")]
+sprite_frames = SubResource("SpriteFrames_hgwja")
+
+[node name="CollisionPolygon2D" parent="HeadArea" index="0"]
+polygon = PackedVector2Array(-69, -2, -31, 47, -85, 66, -122, 29)
+
+[node name="CollisionPolygon2D" parent="BodyArea" index="0"]
+polygon = PackedVector2Array(-73, -150, -23, -203, 75, -238, 87, -195, 89, -160, 115, -175, 139, -173, 142, -132, 135, -103, 164, -71, 190, -11, 192, 44, 190, 74, 243, 78, 239, 94, 192, 137, 109, 175, 18, 190, -97, 181, -165, 150, -207, 102, -214, 50, -208, 13, -194, -39, -156, -97, -110, -136)

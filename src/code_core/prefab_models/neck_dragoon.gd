@@ -1,4 +1,4 @@
-extends Node2D
+extends AnimatedSprite2D
 
 signal shot
 signal screen_visible
@@ -29,7 +29,7 @@ func setup(left_x: float, right_x: float, lane_y: float, dir: int) -> void:
 
 func walk(delta: float) -> void:
 	# Implement walking logic here
-	%BirdAnim.play("default")
+	play("default")
 	var move_speed := speed * delta * _dir
 	var new_x := global_position.x + move_speed
 	new_x = clamp(new_x, _min_x, _max_x)
@@ -38,11 +38,11 @@ func walk(delta: float) -> void:
 	# flip direction at limits
 	if is_equal_approx(new_x, _min_x) or is_equal_approx(new_x, _max_x):
 		_dir *= -1
-		%BirdAnim.flip_h = _dir < 0
+		flip_h = _dir < 0
 	
 
 func _ready() -> void:
-	%BirdAnim.animation = "default"
+	animation = "default"
 
 	# Initialize the resolve timer
 	resolve_timer = Timer.new()

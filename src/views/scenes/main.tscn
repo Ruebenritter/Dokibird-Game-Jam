@@ -172,3 +172,6 @@ background = NodePath("../Frame/BackgroundTexture")
 egg_bird_scene = ExtResource("5_pgnnd")
 neck_bird_scene = ExtResource("8_xxfrf")
 camera = NodePath("../MainCamera")
+
+[node name="neck" parent="BirdControl" instance=ExtResource("8_xxfrf")]
+position = Vector2(-713, 540)
