@@ -1,23 +1,39 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://blfq1ewe5xsv5"]
 
-[ext_resource path="res://assets/character_sprites/Neck Dragoon Proto.png" type="Texture2D" id=1]
-[ext_resource path="res://code_core/prefab_models/NeckDragoon.cs" type="Script" id=2]
+[ext_resource type="Texture2D" uid="uid://jj72tl6ynf5u" path="res://assets/character_sprites/long_idle1.png" id="1_ejch2"]
+[ext_resource type="Script" uid="uid://bmruc0xclfm81" path="res://code_core/prefab_models/neck_dragoon.gd" id="2_g60dq"]
 
-[node name="neck" type="Node2D"]
-script = ExtResource( 2 )
+[sub_resource type="AtlasTexture" id="AtlasTexture_g60dq"]
+atlas = ExtResource("1_ejch2")
+region = Rect2(0, 0, 484, 1007)
 
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-texture = ExtResource( 1 )
+[sub_resource type="SpriteFrames" id="SpriteFrames_pumfm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g60dq")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="neck" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_pumfm")
+animation = &"idle"
+script = ExtResource("2_g60dq")
 
 [node name="HeadArea" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea"]
-polygon = PackedVector2Array( 44, 6, 70, 10, 78, 28, 88, 38, 84, 53, 55, 57, 23, 55, 9, 45, 12, 31, 25, 12 )
+polygon = PackedVector2Array(44, 6, 70, 10, 78, 28, 88, 38, 84, 53, 55, 57, 23, 55, 9, 45, 12, 31, 25, 12)
 
 [node name="HeadArea2" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea2"]
-polygon = PackedVector2Array( 68, 170, 32, 171, 6, 152, 8, 120, 37, 93, 40, 55, 55, 56, 55, 84, 76, 115, 85, 143, 78, 164 )
+polygon = PackedVector2Array(68, 170, 32, 171, 6, 152, 8, 120, 37, 93, 40, 55, 55, 56, 55, 84, 76, 115, 85, 143, 78, 164)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

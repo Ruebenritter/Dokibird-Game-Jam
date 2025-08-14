@@ -1,11 +1,22 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=3 uid="uid://eowmsm6slgv7"]
 
-[ext_resource path="res://views/components/DistanceComponent.tscn" type="PackedScene" id=1]
+[ext_resource type="Texture2D" uid="uid://bmixx1vwarp4q" path="res://assets/character_sprites/chonky_idle1.png" id="1_m45tq"]
 
-[node name="chonky" type="Node2D"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_gl1o0"]
+atlas = ExtResource("1_m45tq")
+region = Rect2(0, 0, 863, 936)
 
-[node name="c_distance" parent="." instance=ExtResource( 1 )]
+[sub_resource type="SpriteFrames" id="SpriteFrames_ctm73"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gl1o0")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
 
-[node name="TextureRect" type="TextureRect" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="chonky" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_ctm73")
+animation = &"idle"

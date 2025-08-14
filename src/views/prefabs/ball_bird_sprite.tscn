@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://brspqed0iwhge"]
+
+[node name="BallBirdSprite" type="AnimatedSprite2D"]
