@@ -1,12 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8wkxadncgbfk"]
+[gd_scene load_steps=10 format=3 uid="uid://b8wkxadncgbfk"]
 
 [ext_resource type="Script" uid="uid://bvvjwsf1d0fxl" path="res://view_models/main.gd" id="1_ix16s"]
 [ext_resource type="PackedScene" uid="uid://c20f0w8iuf7v6" path="res://views/prefabs/crosshair_sprite.tscn" id="2_ny5kc"]
 [ext_resource type="PackedScene" uid="uid://b4bknfn3moohs" path="res://views/prefabs/dart.tscn" id="3_dif2r"]
 [ext_resource type="Texture2D" uid="uid://c7y4pc4ldltng" path="res://assets/backgrounds/Dokibird_Game_Jam_rough_for_leon_hd.png" id="4_dodr4"]
 [ext_resource type="Script" uid="uid://dlam6eqwfhsur" path="res://code_core/spawners/bird_controller.gd" id="5_l10sc"]
-[ext_resource type="PackedScene" uid="uid://c6538danno6b5" path="res://views/prefabs/egg_dragoon.tscn" id="5_pgnnd"]
-[ext_resource type="PackedScene" uid="uid://blfq1ewe5xsv5" path="res://views/prefabs/neck_dragoon.tscn" id="8_xxfrf"]
+[ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="6_l10sc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ix16s"]
 
@@ -169,9 +168,5 @@ mouse_filter = 2
 unique_name_in_owner = true
 script = ExtResource("5_l10sc")
 background = NodePath("../Frame/BackgroundTexture")
-egg_bird_scene = ExtResource("5_pgnnd")
-neck_bird_scene = ExtResource("8_xxfrf")
+base_bird_scene = ExtResource("6_l10sc")
 camera = NodePath("../MainCamera")
-
-[node name="neck" parent="BirdControl" instance=ExtResource("8_xxfrf")]
-position = Vector2(-713, 540)

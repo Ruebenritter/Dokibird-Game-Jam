@@ -4,10 +4,7 @@ extends Node2D
 @export var background: NodePath
 @export var spawn_padding := 100.0
 
-@export var egg_bird_scene: PackedScene
-@export var neck_bird_scene: PackedScene
-@export var ball_bird_scene: PackedScene
-@export var chonky_bird_scene: PackedScene
+@export var base_bird_scene: PackedScene
 
 @export var spawn_limit_by_score := 1000
 @export var desired_birds_on_screen := 5
@@ -60,28 +57,21 @@ func _on_spawn_timer_timeout() -> void:
 	_regular_spawn_timer.wait_time = randf_range(1.0, 3.0) # Randomize the next spawn time
 	_regular_spawn_timer.start()
 
-func _scene_for_type(dragoon_t: Enums.dragoon_type) -> PackedScene:
-	match dragoon_t:
-		Enums.dragoon_type.Egg:
-			return egg_bird_scene
-		Enums.dragoon_type.Neck:
-			return neck_bird_scene
-		Enums.dragoon_type.Ball:
-			return ball_bird_scene
-		Enums.dragoon_type.Chonky:
-			return chonky_bird_scene
-		_:
-			push_error("Unknown dragoon type: %s" % dragoon_t)
-			return null
 
 func _try_spawn_bird() -> void:
 	spawn_attempts += 1
-	var dragoon_t: Enums.dragoon_type = Enums.dragoon_type.Chonky # Default type, can be randomized
+	var dragoon_t: Enums.dragoon_type = Enums.dragoon_type.values()[randi() % 4]
 	var distance_level: Enums.distance_level = Enums.distance_level.values()[randi() % 5] # 0 to 4 for Close, Near, Mid, Far, Distant
 	var speed_level: Enums.speed_level = Enums.speed_level.values()[randi() % 5] # 0 to 4 for Idle, Slow, Normal, Fast, VeryFast
 
 	var bird_value = distance_level + dragoon_t + speed_level
 	print("Trying to spawn bird with value: ", bird_value)
+	var bird := base_bird_scene.instantiate() as AnimatedSprite2D
+
+	if not bird.try_construct(dragoon_t, distance_level, speed_level):
+		print("Failed to construct bird.") # bird construction can fail if distance_level is not compatible with bird type (flightless)
+		bird.queue_free()
+		return
 
 	if spawn_attempts > 100:
 		print("Too many spawn attempts.")
@@ -96,42 +86,54 @@ func _try_spawn_bird() -> void:
 		_try_spawn_bird()
 		return
 
-	var bird := spawn_bird(dragoon_t, distance_level, speed_level)
 	if bird:
+		var spawn_data := _choose_spawn_outside_viewport()
+		var spawn_pos: Vector2 = spawn_data[0]
+		var dir: int = spawn_data[1]
+
+		bird.global_position = spawn_pos
 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
-	_remaining_spawn_limit -= bird_value
-
-
-func spawn_bird(dragoon_t, distance_t, speed_t) -> Node2D:
-	var scene := _scene_for_type(dragoon_t)
-
-	if !scene:
-		return null
-
-	var bird := scene.instantiate() as Node2D
-	add_child(bird)
-
-
-	var spawn_data := _choose_spawn_outside_viewport()
-	var spawn_pos: Vector2 = spawn_data[0]
-	var dir: int = spawn_data[1]
-
-	bird.global_position = spawn_pos
-
-	bird.setup(_min_x + spawn_padding, _max_x - spawn_padding, 900, dir)
-
-	bird.speed = speed_t
-	bird.dragoon_type = dragoon_t
-	bird.distance_level = distance_t
-
-	print("Spawning bird: ", bird.name)
-
-	if bird.has_signal("shot"):
 		bird.connect("shot", Callable(self, "_on_bird_shot"))
-	if bird.has_signal("screen_visible"):
-		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
+		add_child(bird)
+		bird.set_limits(_min_x, _max_x, 700, dir)
+		_remaining_spawn_limit -= bird_value
+		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " with direction: ", dir)
+		spawn_attempts = 0
+	else:
+		push_error("Failed to instantiate bird from scene.")
 
-	return bird
+
+# func spawn_bird(dragoon_t, distance_t, speed_t) -> Node2D:
+# 	var scene := _scene_for_type(dragoon_t)
+
+# 	if !scene:
+# 		return null
+
+# 	var bird := scene.instantiate() as AnimatedSprite2D
+# 	add_child(bird)
+
+
+# 	var spawn_data := _choose_spawn_outside_viewport()
+# 	var spawn_pos: Vector2 = spawn_data[0]
+# 	var dir: int = spawn_data[1]
+
+# 	bird.global_position = spawn_pos
+
+# 	bird.setup(_min_x + spawn_padding, _max_x - spawn_padding, 900, dir)
+
+# 	bird.speed = speed_t
+# 	bird.dragoon_type = dragoon_t
+# 	bird.distance_level = distance_t
+# 	bird.try
+
+# 	print("Spawning bird: ", bird.name)
+
+# 	if bird.has_signal("shot"):
+# 		bird.connect("shot", Callable(self, "_on_bird_shot"))
+# 	if bird.has_signal("screen_visible"):
+# 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
+
+# 	return bird
 
 
 func _on_bird_shot(bird: Node2D, hit_zone: Enums.hit_zone) -> void:

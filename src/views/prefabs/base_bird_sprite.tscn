@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://rd67unskufc0"]
+[gd_scene load_steps=7 format=3 uid="uid://rd67unskufc0"]
 
 [ext_resource type="Script" uid="uid://cslkh4vlf8fih" path="res://code_core/prefab_models/base_bird_sprite.gd" id="1_uxhhu"]
+[ext_resource type="Resource" uid="uid://br6t6cxq0b65r" path="res://resources/chonky_skin.tres" id="2_bl6i8"]
+[ext_resource type="Resource" uid="uid://dae230hf4khgi" path="res://resources/egg_skin.tres" id="3_bda72"]
+[ext_resource type="Resource" uid="uid://bt7kqlowh77av" path="res://resources/long_skin.tres" id="4_7r13h"]
+[ext_resource type="Resource" uid="uid://bollx5ole8oo2" path="res://resources/regular_skin.tres" id="5_23xwt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_uxhhu"]
 animations = [{
@@ -29,6 +33,7 @@ animations = [{
 sprite_frames = SubResource("SpriteFrames_uxhhu")
 animation = &"chonky_idle"
 script = ExtResource("1_uxhhu")
+bird_skins = Array[Resource]([ExtResource("2_bl6i8"), ExtResource("3_bda72"), ExtResource("4_7r13h"), ExtResource("5_23xwt")])
 
 [node name="HeadArea" type="Area2D" parent="."]
 unique_name_in_owner = true

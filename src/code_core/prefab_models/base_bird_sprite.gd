@@ -1,6 +1,5 @@
 extends AnimatedSprite2D
 
-
 signal shot
 signal screen_visible
 
@@ -8,6 +7,7 @@ signal screen_visible
 @export var dragoon_type: Enums.dragoon_type = Enums.dragoon_type.Egg
 @export var distance_level: Enums.distance_level = Enums.distance_level.Close
 @export var flightless_bird := false
+@export var bird_skins: Array[Resource]
 
 # ToDo: add image/sprite animation list to pick from depending on dragoon type
 
@@ -22,8 +22,10 @@ var body_clicked := false
 var resolve_timer: Timer
 var value := 0
 
+# visuals
+var _skin: BirdSkin
+
 func _ready() -> void:
-    animation = "default"
     _debounce_hits()
 
 func _debounce_hits() -> void:
@@ -35,8 +37,11 @@ func _debounce_hits() -> void:
 
 func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, speed: Enums.speed_level) -> bool:
     value = (distance + type) * speed / 100
-
-    return false
+    _apply_skin_for(type)
+    if _skin == null:
+        push_error("No skin found for dragoon type: ", type)
+        return false
+    return true
 
 func set_limits(left_x: float, right_x: float, lane_y: float, goes_left: bool) -> void:
     _map_border_left = left_x
@@ -92,3 +97,22 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
     screen_visible.emit(self, false)
+    
+# visuals
+func _find_skin(e: Enums.dragoon_type) -> BirdSkin:
+    for skin in bird_skins:
+        if skin.type == e:
+            return skin
+    print("No skin found for dragoon type: ", e)
+    return null
+
+func _apply_skin_for(e: Enums.dragoon_type) -> void:
+    _skin = _find_skin(e) as BirdSkin
+    if _skin == null:
+        push_error("No skin found for dragoon type: ", e)
+        return
+    
+    self.frames = _skin.frames
+    self.flightless_bird = _skin.is_flightless
+    self.scale = _skin.scale
+    self.animation = "default"

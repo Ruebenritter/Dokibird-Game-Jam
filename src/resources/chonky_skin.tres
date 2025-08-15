@@ -14,7 +14,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_bpdao")
 }],
 "loop": true,
-"name": &"idle",
+"name": &"default",
 "speed": 5.0
 }]
 
