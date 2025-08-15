@@ -12,8 +12,8 @@ enum speed_level {
 
 enum dragoon_type {
 	Egg,
-	Neck,
-	Ball,
+	Long,
+	Regular,
 	Chonky
 }
 

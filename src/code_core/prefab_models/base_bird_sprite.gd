@@ -20,7 +20,7 @@ var _goes_left := true
 var head_clicked := false
 var body_clicked := false
 var resolve_timer: Timer
-var value := 0
+var value: int = 0
 
 # visuals
 var _skin: BirdSkin
@@ -35,8 +35,8 @@ func _debounce_hits() -> void:
     resolve_timer.connect("timeout", Callable(self, "_on_resolve_timeout"))
     add_child(resolve_timer)
 
-func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, speed: Enums.speed_level) -> bool:
-    value = (distance + type) * speed / 100
+func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bird_speed: Enums.speed_level) -> bool:
+    value = (distance + type) * bird_speed / 100
     _apply_skin_for(type)
     if _skin == null:
         push_error("No skin found for dragoon type: ", type)

@@ -1,26 +1,26 @@
 [gd_scene load_steps=5 format=3 uid="uid://b5u4cgp6o5bij"]
 
 [ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="1_hp30c"]
-[ext_resource type="Texture2D" uid="uid://cop1o0xfd2ghl" path="res://assets/character_sprites/regular_idle1.png" id="2_6pj52"]
+[ext_resource type="Texture2D" uid="uid://8rh2dhrq26an" path="res://assets/character_sprites/regular_fly1.png" id="2_hp30c"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_dplcn"]
-atlas = ExtResource("2_6pj52")
+[sub_resource type="AtlasTexture" id="AtlasTexture_6pj52"]
+atlas = ExtResource("2_hp30c")
 region = Rect2(0, 0, 481, 470)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_hgwja"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_dplcn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_dplcn")
+"texture": SubResource("AtlasTexture_6pj52")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
 "speed": 5.0
 }]
 
 [node name="BirdSprite" instance=ExtResource("1_hp30c")]
-sprite_frames = SubResource("SpriteFrames_hgwja")
-animation = &"default"
+sprite_frames = SubResource("SpriteFrames_dplcn")
+animation = &"idle"
 
 [node name="CollisionPolygon2D" parent="HeadArea" index="0"]
 polygon = PackedVector2Array(-69, -2, -31, 47, -85, 66, -122, 29)

@@ -4,7 +4,10 @@ extends Node2D
 @export var background: NodePath
 @export var spawn_padding := 100.0
 
-@export var base_bird_scene: PackedScene
+@export var egg_bird_scene: PackedScene
+@export var long_bird_scene: PackedScene
+@export var chonky_bird_scene: PackedScene
+@export var regular_bird_scene: PackedScene
 
 @export var spawn_limit_by_score := 1000
 @export var desired_birds_on_screen := 5
@@ -66,7 +69,11 @@ func _try_spawn_bird() -> void:
 
 	var bird_value = distance_level + dragoon_t + speed_level
 	print("Trying to spawn bird with value: ", bird_value)
-	var bird := base_bird_scene.instantiate() as AnimatedSprite2D
+	var scene := _scene_for_type(dragoon_t)
+	if not scene:
+		print("No scene found for dragoon type: ", dragoon_t)
+	
+	var bird := scene.instantiate() as AnimatedSprite2D
 
 	if not bird.try_construct(dragoon_t, distance_level, speed_level):
 		print("Failed to construct bird.") # bird construction can fail if distance_level is not compatible with bird type (flightless)
@@ -101,6 +108,14 @@ func _try_spawn_bird() -> void:
 		spawn_attempts = 0
 	else:
 		push_error("Failed to instantiate bird from scene.")
+
+func _scene_for_type(dragoon_t: Enums.dragoon_type) -> PackedScene:
+	match dragoon_t:
+		Enums.dragoon_type.Egg: return egg_bird_scene
+		Enums.dragoon_type.Long: return long_bird_scene
+		Enums.dragoon_type.Regular: return regular_bird_scene
+		Enums.dragoon_type.Chonky: return chonky_bird_scene
+		_: return null
 
 
 # func spawn_bird(dragoon_t, distance_t, speed_t) -> Node2D:
