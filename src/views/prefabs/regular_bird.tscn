@@ -21,6 +21,7 @@ animations = [{
 [node name="BirdSprite" instance=ExtResource("1_hp30c")]
 sprite_frames = SubResource("SpriteFrames_dplcn")
 animation = &"idle"
+dragoon_type = 2
 
 [node name="CollisionPolygon2D" parent="HeadArea" index="0"]
 polygon = PackedVector2Array(-69, -2, -31, 47, -85, 66, -122, 29)

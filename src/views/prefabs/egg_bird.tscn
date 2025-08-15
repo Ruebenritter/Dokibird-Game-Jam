@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4tmxwqrjhcdg"]
+
+[ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="1_ifc0t"]
+[ext_resource type="Texture2D" uid="uid://b7sykyfl18qth" path="res://assets/character_sprites/egg_walk1.png" id="2_7ao1g"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k2sw1"]
+atlas = ExtResource("2_7ao1g")
+region = Rect2(0, 0, 307, 355)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_f0wdh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k2sw1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BirdSprite" instance=ExtResource("1_ifc0t")]
+sprite_frames = SubResource("SpriteFrames_f0wdh")
+animation = &"default"
+
+[node name="CollisionPolygon2D" parent="HeadArea" index="0"]
+polygon = PackedVector2Array(31, 104, 73, 117, 127, 111, 157, 95, 114, 58, 85, 34, 78, 62, 68, 62, 65, 79, 44, 81, 43, 96)
+
+[node name="CollisionPolygon2D" parent="BodyArea" index="0"]
+polygon = PackedVector2Array(-9, -180, -59, -160, -112, -108, -153, -38, -152, 35, -126, 80, -80, 109, -39, 120, 3, 114, 33, 103, 94, 42, 91, -11, 71, -94, 29, -154)

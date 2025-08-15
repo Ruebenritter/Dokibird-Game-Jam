@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://mo8adwwypubx"]
+
+[ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="1_wfi8j"]
+[ext_resource type="Texture2D" uid="uid://bmixx1vwarp4q" path="res://assets/character_sprites/chonky_idle1.png" id="2_m4be5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb03u"]
+atlas = ExtResource("2_m4be5")
+region = Rect2(0, 0, 863, 936)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bjoht"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lb03u")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="BirdSprite" instance=ExtResource("1_wfi8j")]
+sprite_frames = SubResource("SpriteFrames_bjoht")
+animation = &"default"
+
+[node name="CollisionPolygon2D" parent="HeadArea" index="0"]
+polygon = PackedVector2Array(-63, 113, -155, 99, -234, 43, -269, -28, -243, -76, -160, -112, -78, -123, 44, -115, 132, -78, 157, -12, 117, 58, 34, 105)
+
+[node name="CollisionPolygon2D" parent="BodyArea" index="0"]
+polygon = PackedVector2Array(-170, -284, -134, -299, -91, -357, -14, -417, 107, -465, 163, -471, 175, -391, 179, -304, 248, -327, 281, -321, 283, -231, 258, -146, 304, -76, 348, 45, 374, 96, 424, 82, 436, 140, 414, 212, 364, 284, 308, 322, 209, 345, 84, 350, 84, 391, 123, 440, 82, 442, 72, 468, 28, 451, 20, 471, -18, 437, -28, 349, -65, 351, -72, 433, -109, 472, -120, 448, -163, 468, -173, 441, -218, 443, -177, 396, -176, 348, -269, 335, -364, 295, -420, 219, -430, 101, -411, -3, -368, -104, -311, -180, -314, -234, -278, -317, -225, -314)
