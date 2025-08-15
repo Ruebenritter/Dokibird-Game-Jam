@@ -48,7 +48,7 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 			flightless_bird = randi() % 2 == 0 # Randomly flightless or not
 		Enums.dragoon_type.Chonky:
 			flightless_bird = true
-			bird_speed = Enums.speed_level.Idle
+			speed = Enums.speed_level.Idle
 		_: return false
 
 	# chonky and egg are flightless and can only be near, mid or far

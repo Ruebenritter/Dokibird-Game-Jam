@@ -22,6 +22,7 @@ animations = [{
 sprite_frames = SubResource("SpriteFrames_dplcn")
 animation = &"idle"
 dragoon_type = 2
+distance_level = 15
 
 [node name="CollisionPolygon2D" parent="HeadArea" index="0"]
 polygon = PackedVector2Array(-69, -2, -31, 47, -85, 66, -122, 29)

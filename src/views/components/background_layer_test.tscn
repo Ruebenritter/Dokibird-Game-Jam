@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://dpumvw1dbnevf"]
+[gd_scene load_steps=24 format=3 uid="uid://dpumvw1dbnevf"]
 
+[ext_resource type="Script" uid="uid://djxx7ipyev4v" path="res://view_models/background_layer_control.gd" id="1_0dn6p"]
 [ext_resource type="Texture2D" uid="uid://crbqdkxipfom0" path="res://assets/backgrounds/bg01_sky.png" id="1_f53ld"]
 [ext_resource type="Texture2D" uid="uid://dk7bfeqmyf6jq" path="res://assets/backgrounds/bg02_crowky.png" id="2_2yiig"]
 [ext_resource type="Texture2D" uid="uid://bqiwg70ugm7v" path="res://assets/backgrounds/bg03_clouds.png" id="3_eg3ju"]
@@ -8,22 +9,29 @@
 [ext_resource type="Texture2D" uid="uid://dcvuu2i6rr4kt" path="res://assets/backgrounds/bg07_city.png" id="6_ebgwc"]
 [ext_resource type="Texture2D" uid="uid://dybwntgtkjtdq" path="res://assets/backgrounds/bg08_city_ground.png" id="7_ebgwc"]
 [ext_resource type="Texture2D" uid="uid://bo2dvovtwug03" path="res://assets/backgrounds/bg10_farm_mountains.png" id="8_8ro4u"]
+[ext_resource type="Texture2D" uid="uid://ta3dek1b0mm" path="res://assets/backgrounds/bg09_buildings_1-4.png" id="8_ucd7q"]
+[ext_resource type="Texture2D" uid="uid://bdeockwnkqnh1" path="res://assets/backgrounds/bg09_buildings_1.png" id="9_qhy5r"]
 [ext_resource type="Texture2D" uid="uid://ddl5ige1bol7v" path="res://assets/backgrounds/bg11_farm_hills.png" id="9_qrkgn"]
+[ext_resource type="Texture2D" uid="uid://c5rtlnob7bqn8" path="res://assets/backgrounds/bg09_buildings_2.png" id="10_nhsn2"]
 [ext_resource type="Texture2D" uid="uid://d0fbw7dtnttmu" path="res://assets/backgrounds/bg12_farm_trees.png" id="10_qrkgn"]
 [ext_resource type="Texture2D" uid="uid://da7de44ot2iu3" path="res://assets/backgrounds/bg13_farm_grass.png" id="11_8pthw"]
+[ext_resource type="Texture2D" uid="uid://xs4yhmgpay2i" path="res://assets/backgrounds/bg09_buildings_4_1.png" id="11_fcjrf"]
+[ext_resource type="Texture2D" uid="uid://cehklbyj3krcs" path="res://assets/backgrounds/bg09_buildings_3.png" id="11_qhy5r"]
 [ext_resource type="Texture2D" uid="uid://colbs6to4nxae" path="res://assets/backgrounds/bg14_farm_bushes.png" id="12_31dng"]
+[ext_resource type="Texture2D" uid="uid://1v81jho3whs8" path="res://assets/backgrounds/bg09_buildings_4_2.png" id="13_fcjrf"]
 [ext_resource type="Texture2D" uid="uid://cqk168w7oeoxp" path="res://assets/backgrounds/bg15_farm_tomatoes.png" id="13_wauw2"]
 [ext_resource type="Texture2D" uid="uid://b7r67h321mp3p" path="res://assets/backgrounds/farm_sign.png" id="14_wauw2"]
 [ext_resource type="Texture2D" uid="uid://dx8jpfogv0psq" path="res://assets/backgrounds/windmill_1.png" id="15_gof4t"]
 [ext_resource type="Texture2D" uid="uid://d31v6tbs1eggm" path="res://assets/backgrounds/windmill_2.png" id="16_te7a6"]
 
-[node name="Control" type="Control"]
+[node name="BackgroundControl" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_0dn6p")
 
 [node name="Sky" type="TextureRect" parent="."]
 layout_mode = 1
@@ -66,6 +74,46 @@ layout_mode = 1
 offset_right = 11570.0
 offset_bottom = 1080.0
 texture = ExtResource("7_ebgwc")
+
+[node name="BuildingsGrouped" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 11570.0
+offset_bottom = 1080.0
+texture = ExtResource("8_ucd7q")
+
+[node name="Building01" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 11570.0
+offset_bottom = 1080.0
+texture = ExtResource("9_qhy5r")
+
+[node name="Building02" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 11570.0
+offset_bottom = 1080.0
+texture = ExtResource("10_nhsn2")
+
+[node name="Building03" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+offset_right = 11570.0
+offset_bottom = 1080.0
+texture = ExtResource("11_qhy5r")
+
+[node name="Building04" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 11570.0
+offset_bottom = 1080.0
+texture = ExtResource("11_fcjrf")
+
+[node name="Building05" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 11570.0
+offset_bottom = 1080.0
+texture = ExtResource("13_fcjrf")
 
 [node name="FarmMountains" type="TextureRect" parent="."]
 layout_mode = 1
@@ -117,11 +165,12 @@ offset_right = 11316.0
 offset_bottom = 1103.0
 texture = ExtResource("15_gof4t")
 
-[node name="Node2D" type="Node2D" parent="Windmill"]
-position = Vector2(160, 112)
+[node name="WindmillOrigin" type="Node2D" parent="Windmill"]
+unique_name_in_owner = true
+position = Vector2(163, 103)
 rotation = -0.241009
 
-[node name="TextureRect" type="TextureRect" parent="Windmill/Node2D"]
+[node name="Rotating" type="TextureRect" parent="Windmill/WindmillOrigin"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

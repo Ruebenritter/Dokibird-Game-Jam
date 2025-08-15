@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bquq2o24ooj7o"
+path="res://.godot/imported/3 sec countdown.mp3-776a524921345f252c50ec11e578a6f4.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/3 sec countdown.mp3"
+dest_files=["res://.godot/imported/3 sec countdown.mp3-776a524921345f252c50ec11e578a6f4.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

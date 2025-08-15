@@ -9,6 +9,8 @@ extends Control
 @export var camera_pan_speed: float = 100.0
 @export var edge_threshold: float = 50.0
 
+@export var sounds: Array[Resource]
+
 
 var _reloading: bool = false
 var _last_round: Dart
@@ -18,10 +20,17 @@ var _max_x := 0.0
 var _fixed_y := 0.0
 var _viewport_size: Vector2 = Vector2.ZERO
 
+
+# sounds
+var _shot: sfx
+var _reload_sound: sfx
+var _hit_sound: sfx
+
 var _countdownTimer: Timer
 @export var countdown_time_seconds: int = 90
 
 func _ready() -> void:
+	_link_sounds()
 	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	_viewport_size = get_viewport().get_visible_rect().size
 
@@ -41,6 +50,19 @@ func _ready() -> void:
 
 	%TimeLabel.text = format_time(countdown_time_seconds)
 	%ScoreLabel.text = "0"
+
+func _link_sounds() -> void:
+	if not sounds.is_empty():
+		for sound in sounds:
+			match sound.sfx_type:
+				Enums.sfx_type.Shot:
+					_shot = sound
+				Enums.sfx_type.Reload:
+					_reload_sound = sound
+				Enums.sfx_type.Hit:
+					_hit_sound = sound
+				_:
+					push_error("Unknown sound type: %s" % sound.sfx_type)
 
 
 func _process(delta: float) -> void:
@@ -81,6 +103,17 @@ func _fire_once() -> void:
 
 	var last = %AmmoRow.get_child(count - 1) as Dart
 	last.queue_free()
+	_play_sound(_shot)
+
+func _play_sound(sound: sfx) -> void:
+	if not sound or not sound.sound_effect:
+		push_error("Sound effect is not set or invalid.")
+		return
+
+	# %AudioStreamPlayer.volume_db = sound.volume
+	# %AudioStreamPlayer.pitch_scale = sound.pitch
+	%AudioStreamPlayer.stream = sound.sound_effect
+	%AudioStreamPlayer.play()
 
 func _reload() -> void:
 	if not ammo_scene:
@@ -91,7 +124,6 @@ func _reload() -> void:
 
 	_reloading = true
 	%BirdControl.set_can_shoot(false)
-	
 	_clear_ammo_items()
 
 	var wait_between_reload: float = reload_time / max_ammo
@@ -103,7 +135,7 @@ func _reload() -> void:
 		
 		var ammo_instance = ammo_scene.instantiate() as Dart
 		%AmmoRow.add_child(ammo_instance)
-
+		_play_sound(_reload_sound)
 		ammo_instance.blink()
 		_last_round = ammo_instance
 		
@@ -143,3 +175,4 @@ func format_time(seconds: int) -> String:
 
 func _on_bird_control_scored(value: int) -> void:
 	%ScoreLabel.text = str(int(%ScoreLabel.text) + value)
+	_play_sound(_hit_sound)

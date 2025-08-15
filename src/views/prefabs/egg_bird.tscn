@@ -20,7 +20,8 @@ animations = [{
 
 [node name="BirdSprite" instance=ExtResource("1_ifc0t")]
 sprite_frames = SubResource("SpriteFrames_f0wdh")
-animation = &"default"
+distance_level = 10
+flightless_bird = true
 
 [node name="CollisionPolygon2D" parent="HeadArea" index="0"]
 polygon = PackedVector2Array(31, 104, 73, 117, 127, 111, 157, 95, 114, 58, 85, 34, 78, 62, 68, 62, 65, 79, 44, 81, 43, 96)

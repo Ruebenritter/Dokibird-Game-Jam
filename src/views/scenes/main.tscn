@@ -1,11 +1,15 @@
-[gd_scene load_steps=13 format=3 uid="uid://b8wkxadncgbfk"]
+[gd_scene load_steps=17 format=3 uid="uid://b8wkxadncgbfk"]
 
 [ext_resource type="Script" uid="uid://bvvjwsf1d0fxl" path="res://view_models/main.gd" id="1_ix16s"]
 [ext_resource type="PackedScene" uid="uid://c20f0w8iuf7v6" path="res://views/components/crosshair_sprite.tscn" id="2_ny5kc"]
 [ext_resource type="PackedScene" uid="uid://b4bknfn3moohs" path="res://views/components/dart.tscn" id="3_dif2r"]
 [ext_resource type="Texture2D" uid="uid://c7y4pc4ldltng" path="res://assets/backgrounds/Dokibird_Game_Jam_rough_for_leon_hd.png" id="4_dodr4"]
+[ext_resource type="Resource" uid="uid://jhnf1oofot3e" path="res://resources/sfx/shot.tres" id="4_y7kap"]
+[ext_resource type="PackedScene" uid="uid://ceknfff6cue5e" path="res://views/components/background.tscn" id="5_2t4ak"]
+[ext_resource type="Resource" uid="uid://bevuwr7q8qdvp" path="res://resources/sfx/reload.tres" id="5_71p7y"]
 [ext_resource type="Script" uid="uid://dlam6eqwfhsur" path="res://code_core/spawners/bird_controller.gd" id="5_l10sc"]
 [ext_resource type="PackedScene" uid="uid://c4tmxwqrjhcdg" path="res://views/prefabs/egg_bird.tscn" id="6_cm8ki"]
+[ext_resource type="Resource" uid="uid://cgn1m63i7cbea" path="res://resources/sfx/hit.tres" id="6_ruoeq"]
 [ext_resource type="PackedScene" uid="uid://b5ir54suxdymc" path="res://views/prefabs/long_bird.tscn" id="7_2t4ak"]
 [ext_resource type="PackedScene" uid="uid://b5u4cgp6o5bij" path="res://views/prefabs/regular_bird.tscn" id="8_cm8ki"]
 [ext_resource type="PackedScene" uid="uid://mo8adwwypubx" path="res://views/prefabs/chonky_bird.tscn" id="8_y7kap"]
@@ -17,7 +21,7 @@ font_size = 60
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny5kc"]
 
-[node name="main" type="Control"]
+[node name="game" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -30,6 +34,7 @@ script = ExtResource("1_ix16s")
 cursor_scene = ExtResource("2_ny5kc")
 ammo_scene = ExtResource("3_dif2r")
 camera_pan_speed = 800.0
+sounds = Array[Resource]([ExtResource("4_y7kap"), ExtResource("5_71p7y"), ExtResource("6_ruoeq")])
 
 [node name="Frame" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -42,9 +47,25 @@ grow_vertical = 2
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_ix16s")
 
-[node name="BackgroundTexture" type="TextureRect" parent="Frame"]
-unique_name_in_owner = true
+[node name="BackgroundControl" parent="Frame" instance=ExtResource("5_2t4ak")]
 layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="BackgroundTexture" type="TextureRect" parent="Frame/BackgroundControl"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5785.0
+offset_top = -540.0
+offset_right = 5785.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_dodr4")
 
 [node name="MainCamera" type="Camera2D" parent="."]
@@ -170,11 +191,14 @@ mouse_filter = 2
 [node name="BirdControl" type="Node2D" parent="." node_paths=PackedStringArray("camera")]
 unique_name_in_owner = true
 script = ExtResource("5_l10sc")
-background = NodePath("../Frame/BackgroundTexture")
+background = NodePath("../Frame/BackgroundControl/BackgroundTexture")
 egg_bird_scene = ExtResource("6_cm8ki")
 long_bird_scene = ExtResource("7_2t4ak")
 chonky_bird_scene = ExtResource("8_y7kap")
 regular_bird_scene = ExtResource("8_cm8ki")
 camera = NodePath("../MainCamera")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
 
 [connection signal="scored" from="BirdControl" to="." method="_on_bird_control_scored"]

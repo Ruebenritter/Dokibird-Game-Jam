@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b1ug54c8d6aiw"
+path="res://.godot/imported/10 sec countdown.mp3-3624b5ef83d4f9d8e70fe2a6f81beddc.mp3str"
+
+[deps]
+
+source_file="res://audio/sfx/10 sec countdown.mp3"
+dest_files=["res://.godot/imported/10 sec countdown.mp3-3624b5ef83d4f9d8e70fe2a6f81beddc.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

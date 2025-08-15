@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="sfx" load_steps=3 format=3 uid="uid://cgn1m63i7cbea"]
+
+[ext_resource type="Script" uid="uid://pci2h6k3q5ko" path="res://code_core/data/sfx.gd" id="1_owl8b"]
+[ext_resource type="AudioStream" uid="uid://bpi3fdghfga3i" path="res://audio/sfx/hit.wav" id="2_g8ex6"]
+
+[resource]
+script = ExtResource("1_owl8b")
+sound_effect = ExtResource("2_g8ex6")
+volume = 1.0
+pitch = 1.0
+sfx_type = 1
+metadata/_custom_type_script = "uid://pci2h6k3q5ko"

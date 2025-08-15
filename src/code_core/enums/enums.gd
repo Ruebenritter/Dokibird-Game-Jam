@@ -42,3 +42,13 @@ enum fly_zone_lane {
 	HighRise = 400,
 	Fly = 250,
 }
+
+enum sfx_type {
+	Shot,
+	Hit,
+	Reload,
+	Spawn,
+	Click,
+	StartAlarm,
+	EndAlarm,
+}
