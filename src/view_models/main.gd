@@ -67,14 +67,6 @@ func _input(event: InputEvent) -> void:
 			elif event.button_index == MOUSE_BUTTON_RIGHT:
 				_reload()
 
-
-# func _unhandled_input(event: InputEvent) -> void:
-# 	if event is InputEventMouseButton and event.is_pressed():
-# 		if event.button_index == MOUSE_BUTTON_LEFT:
-# 			_fire_once()
-# 		elif event.button_index == MOUSE_BUTTON_RIGHT:
-# 			_reload()
-
 func _fire_once() -> void:
 	if not ammo_scene:
 		return
@@ -147,3 +139,7 @@ func format_time(seconds: int) -> String:
 	var minutes := seconds / 60
 	var secs := seconds % 60
 	return "%02d:%02d" % [minutes, secs]
+
+
+func _on_bird_control_scored(value: int) -> void:
+	%ScoreLabel.text = str(int(%ScoreLabel.text) + value)

@@ -176,3 +176,5 @@ long_bird_scene = ExtResource("7_2t4ak")
 chonky_bird_scene = ExtResource("8_y7kap")
 regular_bird_scene = ExtResource("8_cm8ki")
 camera = NodePath("../MainCamera")
+
+[connection signal="scored" from="BirdControl" to="." method="_on_bird_control_scored"]

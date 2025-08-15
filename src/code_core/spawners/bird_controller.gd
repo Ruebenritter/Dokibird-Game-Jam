@@ -15,6 +15,8 @@ extends Node2D
 @export var camera: Camera2D
 
 
+signal scored
+
 var _remaining_spawn_limit := spawn_limit_by_score
 var background_bounds: Rect2
 var _min_x := -INF
@@ -67,6 +69,7 @@ func _try_spawn_bird() -> void:
 	var distance_level: Enums.distance_level = Enums.distance_level.values()[randi() % 5] # 0 to 4 for Close, Near, Mid, Far, Distant
 	var speed_level: Enums.speed_level = Enums.speed_level.values()[randi() % 5] # 0 to 4 for Idle, Slow, Normal, Fast, VeryFast
 
+
 	var bird_value = distance_level + dragoon_t + speed_level
 	print("Trying to spawn bird with value: ", bird_value)
 	var scene := _scene_for_type(dragoon_t)
@@ -102,7 +105,7 @@ func _try_spawn_bird() -> void:
 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
 		bird.connect("shot", Callable(self, "_on_bird_shot"))
 		add_child(bird)
-		bird.set_limits(_min_x, _max_x, 700, dir)
+		bird.set_limits(_min_x, _max_x, dir)
 		_remaining_spawn_limit -= bird_value
 		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " with direction: ", dir)
 		spawn_attempts = 0
@@ -118,44 +121,12 @@ func _scene_for_type(dragoon_t: Enums.dragoon_type) -> PackedScene:
 		_: return null
 
 
-# func spawn_bird(dragoon_t, distance_t, speed_t) -> Node2D:
-# 	var scene := _scene_for_type(dragoon_t)
-
-# 	if !scene:
-# 		return null
-
-# 	var bird := scene.instantiate() as AnimatedSprite2D
-# 	add_child(bird)
-
-
-# 	var spawn_data := _choose_spawn_outside_viewport()
-# 	var spawn_pos: Vector2 = spawn_data[0]
-# 	var dir: int = spawn_data[1]
-
-# 	bird.global_position = spawn_pos
-
-# 	bird.setup(_min_x + spawn_padding, _max_x - spawn_padding, 900, dir)
-
-# 	bird.speed = speed_t
-# 	bird.dragoon_type = dragoon_t
-# 	bird.distance_level = distance_t
-# 	bird.try
-
-# 	print("Spawning bird: ", bird.name)
-
-# 	if bird.has_signal("shot"):
-# 		bird.connect("shot", Callable(self, "_on_bird_shot"))
-# 	if bird.has_signal("screen_visible"):
-# 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
-
-# 	return bird
-
-
 func _on_bird_shot(bird: Node2D, hit_zone: Enums.hit_zone) -> void:
 	if !_can_shoot:
 		print("Cannot shoot, reloading or not allowed.")
 		return
 	if hit_zone == Enums.hit_zone.Head:
+		scored.emit(bird.value)
 		bird.queue_free()
 		_on_screen_count = max(0, _on_screen_count - 1)
 	elif hit_zone == Enums.hit_zone.Body:
