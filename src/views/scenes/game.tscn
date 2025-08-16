@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bh8551xlobrhx"]
+[gd_scene load_steps=19 format=3 uid="uid://bh8551xlobrhx"]
 
 [ext_resource type="Script" uid="uid://7qflgr7y8rr4" path="res://view_models/game_viewmodel.gd" id="1_h27ot"]
 [ext_resource type="PackedScene" uid="uid://c20f0w8iuf7v6" path="res://views/components/crosshair_sprite.tscn" id="2_tiy8y"]
@@ -9,6 +9,8 @@
 [ext_resource type="Resource" uid="uid://jhnf1oofot3e" path="res://resources/sfx/shot.tres" id="6_mcyuj"]
 [ext_resource type="Script" uid="uid://dlam6eqwfhsur" path="res://code_core/spawners/bird_controller.gd" id="7_cc5fq"]
 [ext_resource type="PackedScene" uid="uid://c4tmxwqrjhcdg" path="res://views/prefabs/egg_bird.tscn" id="8_2lnj0"]
+[ext_resource type="PackedScene" uid="uid://bfrnhthbhxb3k" path="res://views/components/middleground.tscn" id="8_nmau5"]
+[ext_resource type="PackedScene" uid="uid://npk082shgcnw" path="res://views/components/special buildings.tscn" id="9_mcyuj"]
 [ext_resource type="PackedScene" uid="uid://dqtd3sp3bkixu" path="res://views/components/lane_visuals.tscn" id="9_nmau5"]
 [ext_resource type="PackedScene" uid="uid://b5ir54suxdymc" path="res://views/prefabs/long_bird.tscn" id="9_sb8le"]
 [ext_resource type="PackedScene" uid="uid://mo8adwwypubx" path="res://views/prefabs/chonky_bird.tscn" id="10_jgi6j"]
@@ -53,6 +55,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ix16s")
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
+
+[node name="special buildings" parent="Frame" instance=ExtResource("9_mcyuj")]
+z_index = 6
+layout_mode = 2
+script = null
+
+[node name="Middleground" parent="Frame" instance=ExtResource("8_nmau5")]
+z_index = 2
+layout_mode = 2
+script = null
 
 [node name="LaneVisuals" parent="." instance=ExtResource("9_nmau5")]
 enabled = false

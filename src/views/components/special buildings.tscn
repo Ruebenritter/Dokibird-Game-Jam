@@ -1,0 +1,55 @@
+[gd_scene load_steps=5 format=3 uid="uid://npk082shgcnw"]
+
+[ext_resource type="Script" uid="uid://djxx7ipyev4v" path="res://view_models/background_layer_control.gd" id="1_dkd11"]
+[ext_resource type="Texture2D" uid="uid://c558rq6r585pj" path="res://assets/backgrounds/bg16_trashtomato1.png" id="2_myj6y"]
+[ext_resource type="Texture2D" uid="uid://cqcxmqvr68vtv" path="res://assets/backgrounds/bg17_posterwall1.png" id="3_fyffu"]
+[ext_resource type="Texture2D" uid="uid://bsgvjp0gdt4gj" path="res://assets/backgrounds/bg19_arcade1.png" id="4_183tv"]
+
+[node name="BackgroundControl" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -957.0
+offset_top = -544.0
+offset_right = -957.0
+offset_bottom = -544.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_dkd11")
+
+[node name="trashtomato" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -5804.0
+offset_right = 5966.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+texture = ExtResource("2_myj6y")
+
+[node name="posterwall" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -4390.0
+offset_right = 7380.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+texture = ExtResource("3_fyffu")
+
+[node name="arcade" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -5885.0
+offset_right = 5885.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+texture = ExtResource("4_183tv")

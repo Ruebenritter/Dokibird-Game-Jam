@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://ceknfff6cue5e"]
 
-[ext_resource type="Script" path="res://view_models/background_layer_control.gd" id="1_lurvf"]
+[ext_resource type="Script" uid="uid://djxx7ipyev4v" path="res://view_models/background_layer_control.gd" id="1_lurvf"]
 [ext_resource type="Texture2D" uid="uid://crbqdkxipfom0" path="res://assets/backgrounds/bg01_sky.png" id="2_glyur"]
 [ext_resource type="Texture2D" uid="uid://dk7bfeqmyf6jq" path="res://assets/backgrounds/bg02_crowky.png" id="3_c1slw"]
 [ext_resource type="Texture2D" uid="uid://bqiwg70ugm7v" path="res://assets/backgrounds/bg03_clouds.png" id="4_p22fv"]
@@ -204,6 +204,7 @@ grow_vertical = 2
 texture = ExtResource("12_1qnqf")
 
 [node name="Building04" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -324,6 +325,7 @@ grow_vertical = 2
 texture = ExtResource("20_8eraf")
 
 [node name="FarmSign" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
