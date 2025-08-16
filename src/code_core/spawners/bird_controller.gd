@@ -10,7 +10,7 @@ extends Node2D
 @export var chonky_bird_scene: PackedScene
 @export var regular_bird_scene: PackedScene
 
-@export var spawn_limit_by_score := 1000
+@export var spawn_limit_by_score := 2000
 @export var desired_birds_on_screen := 5
 @export var spawn_interval_min_seconds := 1.0
 @export var spawn_interval_max_seconds := 3.0
@@ -55,6 +55,10 @@ func _on_spawn_timer_timeout() -> void:
 	_try_spawn_bird_once()
 	_spawn_timer.wait_time = randf_range(1.0, 3.0) # Randomize the next spawn time
 	_spawn_timer.start()
+
+	# spawn more while under desired count -> maybe check in process or after count changes signal?
+	if _on_screen_count < desired_birds_on_screen:
+		_try_spawn_bird_once()
 
 func _resolve_world_bounds() -> void:
 	if background.is_empty():
@@ -133,56 +137,6 @@ func _try_spawn_bird_once() -> void:
 	var worth := int(bird.get("value"))
 	_remaining_spawn_limit -= worth
 
-
-# func _try_spawn_bird() -> void:
-# 	spawn_attempts += 1
-# 	var dragoon_t: Enums.dragoon_type = Enums.dragoon_type.values()[randi() % 4]
-# 	var distance_level: Enums.distance_level = Enums.distance_level.values()[randi() % 5] # 0 to 4 for Close, Near, Mid, Far, Distant
-# 	var speed_level: Enums.speed_level = Enums.speed_level.values()[randi() % 5] # 0 to 4 for Idle, Slow, Normal, Fast, VeryFast
-
-
-# 	var bird_value = distance_level + dragoon_t + speed_level
-# 	var scene := _scene_for_type(dragoon_t)
-# 	if not scene:
-# 		print("No scene found for dragoon type: ", dragoon_t)
-# 		return
-	
-# 	var bird := scene.instantiate() as AnimatedSprite2D
-
-# 	if not bird.try_construct(dragoon_t, distance_level, speed_level):
-# 		print("Failed to construct bird.") # bird construction can fail if distance_level is not compatible with bird type (flightless)
-# 		bird.queue_free()
-# 		return
-
-# 	if spawn_attempts > 100:
-# 		print("Too many spawn attempts.")
-# 		return
-
-# 	if _remaining_spawn_limit <= 0:
-# 		print_debug("Spawn limit reached, cannot spawn more birds.")
-# 		return
-	
-# 	if bird_value > _remaining_spawn_limit:
-# 		print_debug("Not enough spawn limit left for bird value: ", bird_value)
-# 		_try_spawn_bird()
-# 		return
-
-# 	if bird:
-# 		var spawn_data := _choose_spawn_outside_viewport()
-# 		var spawn_pos: Vector2 = spawn_data[0]
-# 		var from_left: bool = spawn_data[1]
-
-# 		bird.global_position.x = spawn_pos.x
-# 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
-# 		bird.connect("shot", Callable(self, "_on_bird_shot"))
-# 		add_child(bird)
-# 		bird.set_limits(_min_x, _max_x, !from_left)
-# 		_remaining_spawn_limit -= bird_value
-# 		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " that goes left: ", !from_left)
-# 		spawn_attempts = 0
-# 	else:
-# 		push_error("Failed to instantiate bird from scene.")
-
 func _scene_for_type(dragoon_t: Enums.dragoon_type) -> PackedScene:
 	match dragoon_t:
 		Enums.dragoon_type.Egg: return egg_bird_scene
@@ -240,6 +194,10 @@ func _duplicate_and_bounce(original_bird: AnimatedSprite2D) -> void:
 	duplicate_bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
 	duplicate_bird.connect("shot", Callable(self, "_on_bird_shot"))
 
+
+	duplicate_bird.start_knockback(original_bird.is_going_left(), randf_range(800.0, 1200.0), 0.5)
+	original_bird.start_knockback(!original_bird.is_going_left(), randf_range(800.0, 1200.0), 0.5)
+
 	print("Duplicated bird: ", duplicate_bird.name, " at position: ", duplicate_bird.global_position)
 
 	
@@ -248,7 +206,9 @@ func _on_bird_screen_visible(_bird: Node2D, bird_visible: bool) -> void:
 		_on_screen_count += 1
 	else:
 		_on_screen_count = max(0, _on_screen_count - 1)
-	
+		if _on_screen_count < desired_birds_on_screen:
+			_try_spawn_bird_once()
+
 	print("Bird on screen count: ", _on_screen_count)
 
 func set_can_shoot(value: bool) -> void:

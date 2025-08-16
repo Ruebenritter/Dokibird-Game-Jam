@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://bsbblhbfciaej" path="res://assets/ui/RetryButton.png" id="2_xj8rf"]
 
 [sub_resource type="SystemFont" id="SystemFont_t0cvf"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_wats2"]
 font = SubResource("SystemFont_t0cvf")

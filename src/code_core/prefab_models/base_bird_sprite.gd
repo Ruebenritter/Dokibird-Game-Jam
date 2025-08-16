@@ -40,6 +40,9 @@ var _headshot_squeak: sfx
 var _bodyshot_squeak: sfx
 var _spawn_sound: sfx
 
+# direction update
+var _last_position: Vector2 = Vector2.ZERO
+
 func _ready() -> void:
 	_debounce_hits()
 
@@ -51,6 +54,7 @@ func _ready() -> void:
 
 	%BirdNoiser.stream = _spawn_sound.sound_effect
 	%BirdNoiser.play()
+	_last_position = global_position
 
 func _process(delta: float) -> void:
 	if _move_state == MoveState.Kockback:
@@ -61,6 +65,15 @@ func _process(delta: float) -> void:
 			_move_state = MoveState.Default
 	else:
 		_move(delta, _goes_left)
+
+	
+	# if updated x is right we flip the sprite else we keep original direction. we ignore goes left and simply update by movement direction
+	if global_position.x > _last_position.x:
+		_goes_left = false
+	else:
+		_goes_left = true
+	_apply_facing_from_direction()
+	_last_position = global_position
 
 func _sort_sounds() -> void:
 	if not squeak_sounds.is_empty():
@@ -84,7 +97,10 @@ func _debounce_hits() -> void:
 func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bird_speed: Enums.speed_level) -> bool:
 	dragoon_type = type
 	distance_level = distance
-	speed_level = bird_speed
+	speed_level = bird_speed # i was correct in updating them only after changes might be made to the variables but ai keeps suggesting it on top. nvm now
+
+	if speed_level == Enums.speed_level.Idle:
+		speed_level = Enums.speed_level.Normal
 
 	match type:
 		Enums.dragoon_type.Egg:
@@ -95,7 +111,7 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 			is_flightless_bird = randi() % 2 == 0 # Randomly flightless or not
 		Enums.dragoon_type.Chonky:
 			is_flightless_bird = true
-			bird_speed = Enums.speed_level.Idle
+			speed_level = Enums.speed_level.Idle
 		_: is_flightless_bird = false # Default to flying for any other type
 
 	if is_flightless_bird:
@@ -115,10 +131,13 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 
 	# preliminary z value to keep birds on top. need to reorder with buildings
 	z_index = 1000 - int(distance)
-	
-	value = max(1, 3 + (type as int * 2) + (distance as int * 2) + (bird_speed as int))
+
+	value = max(1, 3 + (dragoon_type as int * 2) + (distance_level as int * 2) + (speed_level as int))
 	return true
 
+func _apply_facing_from_direction() -> void:
+	var magnitute: float = abs(scale.x)
+	scale.x = magnitute if _goes_left else -magnitute
 
 func _distance_to_y_lane(distance: Enums.distance_level, flightless: bool) -> float:
 	if flightless:
@@ -158,6 +177,7 @@ func set_limits(left_x: float, right_x: float, goes_left: bool) -> void:
 	_map_border_left = left_x
 	_map_border_right = right_x
 	_goes_left = goes_left
+	_apply_facing_from_direction()
 
 	# flip the sprite if it goes right
 	if not goes_left:
@@ -181,11 +201,14 @@ func _move(delta: float, goes_left: bool) -> void:
 		#global_position.y = _lane_y + (randf() * 20 - 10) # Randomize Y position slightly when changing direction
 		scale.x = scale.x * -1 # Flip the sprite when changing direction
 
+
 func start_knockback(left: bool, velocity: float, duration: float) -> void:
 	print("Starting knockback: left=%s, velocity=%s, duration=%s" % [left, velocity, duration])
 	_move_state = MoveState.Kockback
 	_knock_velocity = velocity * (-1 if left else 1)
 	_knock_duration = duration
+	_goes_left = left
+	_apply_facing_from_direction()
 
 # Hit handling
 func _start_resolve() -> void:
