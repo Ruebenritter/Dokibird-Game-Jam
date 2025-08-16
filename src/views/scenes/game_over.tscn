@@ -10,7 +10,8 @@ subpixel_positioning = 0
 [sub_resource type="LabelSettings" id="LabelSettings_wats2"]
 font = SubResource("SystemFont_t0cvf")
 font_size = 300
-font_color = Color(0, 0, 0, 1)
+outline_size = 60
+outline_color = Color(0.422723, 0.478428, 0.710284, 1)
 
 [node name="GameOver" type="Control"]
 layout_mode = 3

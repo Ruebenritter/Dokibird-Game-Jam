@@ -18,6 +18,8 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_dodr4"]
 font_size = 60
+outline_size = 20
+outline_color = Color(0.584763, 0.4278, 0.62, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny5kc"]
 
