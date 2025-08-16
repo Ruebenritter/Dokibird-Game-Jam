@@ -36,7 +36,6 @@ sprite_frames = SubResource("SpriteFrames_f0wdh")
 animation = &"sick"
 frame_progress = 0.440496
 distance_level = 10
-flightless_bird = true
 
 [node name="CollisionPolygon2D" parent="BodyArea" index="0"]
 position = Vector2(1, 6)

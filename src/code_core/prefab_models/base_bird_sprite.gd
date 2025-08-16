@@ -3,10 +3,10 @@ extends AnimatedSprite2D
 signal shot
 signal screen_visible
 
-@export var speed := Enums.speed_level.Normal
+@export var speed_level := Enums.speed_level.Normal
 @export var dragoon_type: Enums.dragoon_type = Enums.dragoon_type.Egg
 @export var distance_level: Enums.distance_level = Enums.distance_level.Close
-@export var flightless_bird := false
+@export var is_flightless_bird := false
 #@export var bird_skins: Array[Resource]
 @export var squeak_sounds: Array[Resource]
 
@@ -82,89 +82,77 @@ func _debounce_hits() -> void:
 	add_child(resolve_timer)
 
 func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bird_speed: Enums.speed_level) -> bool:
-	match type:
-		Enums.dragoon_type.Egg:
-			flightless_bird = true
-		Enums.dragoon_type.Long:
-			flightless_bird = false
-		Enums.dragoon_type.Regular:
-			flightless_bird = randi() % 2 == 0 # Randomly flightless or not
-		Enums.dragoon_type.Chonky:
-			flightless_bird = true
-			bird_speed = Enums.speed_level.Idle
-		_: return false
-
-	# chonky and egg are flightless and can only be near, mid or far
-	if type == Enums.dragoon_type.Egg or type == Enums.dragoon_type.Chonky:
-		if distance == Enums.distance_level.Close:
-			print("Egg and Chonky birds cannot be spawned at Close distance.")
-			return false
-		if distance == Enums.distance_level.Distant:
-			print("Distant distance is not allowed for any bird type.")
-			return false
-	
-	# if regular is flightless, it can only be near, mid or far
-	if type == Enums.dragoon_type.Regular and flightless_bird:
-		if distance == Enums.distance_level.Close:
-			print("Regular flightless birds cannot be spawned at Close distance.")
-			return false
-		if distance == Enums.distance_level.Distant:
-			print("Distant distance is not allowed for any bird type.")
-			return false
-
-	# flying birds cannot be close or idle
-	if not flightless_bird and (distance == Enums.distance_level.Close or bird_speed == Enums.speed_level.Idle):
-		print("Flying birds cannot be spawned at Close distance.")
-		return false
-
-	# match distance to fly zone
-	match distance:
-		Enums.distance_level.Close:
-			_lane_y = Enums.ground_levels.ForeGround
-		Enums.distance_level.Near:
-			_lane_y = Enums.ground_levels.ForeGround as int if flightless_bird else Enums.fly_zone_lane.Hover
-		Enums.distance_level.Mid:
-			_lane_y = Enums.ground_levels.MidGround as int if flightless_bird else Enums.fly_zone_lane.Jump
-		Enums.distance_level.Far:
-			_lane_y = Enums.ground_levels.BackGround as int if flightless_bird else Enums.fly_zone_lane.HighRise
-		Enums.distance_level.Distant:
-			_lane_y = Enums.fly_zone_lane.Fly
-
-	
-	value = (distance + type) * (bird_speed / 100.0) as int
-
-	var scale_1d := _distance_to_scale()
-	scale = Vector2(scale_1d, scale_1d)
-	print("Constructing bird with type: ", type, ", distance: ", distance, ", speed: ", bird_speed, ", scale: ", scale)
-
-	# set texture offset from frame[0] in "default"
-	var anim := &"default"
-	if sprite_frames and sprite_frames.has_animation(anim) and sprite_frames.get_frame_count(anim) > 0:
-		var frame_tex: Texture2D = sprite_frames.get_frame_texture(anim, 0)
-		if frame_tex:
-			_texture_y_offset = frame_tex.get_height() * (1.0 - scale_1d) / 2.0
-	else:
-		push_warning("No 'default' animation found on %s" % name)
-
-	
-	global_position.y = _lane_y - _texture_y_offset
-
-	z_index = - distance_level + 1000
-
 	dragoon_type = type
 	distance_level = distance
-	speed = bird_speed
+	speed_level = bird_speed
 
+	match type:
+		Enums.dragoon_type.Egg:
+			is_flightless_bird = true
+		Enums.dragoon_type.Long:
+			is_flightless_bird = false
+		Enums.dragoon_type.Regular:
+			is_flightless_bird = randi() % 2 == 0 # Randomly flightless or not
+		Enums.dragoon_type.Chonky:
+			is_flightless_bird = true
+			bird_speed = Enums.speed_level.Idle
+		_: is_flightless_bird = false # Default to flying for any other type
+
+	if is_flightless_bird:
+		if distance == Enums.distance_level.Distant or distance == Enums.distance_level.Close:
+			print("Flightless birds cannot be spawned at Distant or Close distance.")
+			return false
+	else:
+		if distance == Enums.distance_level.Close or speed_level == Enums.speed_level.Idle:
+			print("Flying birds cannot be spawned at Close distance or with Idle speed_level.")
+			return false
+
+	_lane_y = _distance_to_y_lane(distance, is_flightless_bird)
+	scale = _distance_to_scale()
+
+	_texture_y_offset = _animation_frame_y_offset()
+	global_position.y = _lane_y - _texture_y_offset
+
+	# preliminary z value to keep birds on top. need to reorder with buildings
+	z_index = 1000 - int(distance)
+	
+	value = max(1, 3 + (type as int * 2) + (distance as int * 2) + (bird_speed as int))
 	return true
 
-func _distance_to_scale() -> float:
+
+func _distance_to_y_lane(distance: Enums.distance_level, flightless: bool) -> float:
+	if flightless:
+		match distance:
+			Enums.distance_level.Near: return Enums.ground_levels.ForeGround
+			Enums.distance_level.Mid: return Enums.ground_levels.MidGround
+			Enums.distance_level.Far: return Enums.ground_levels.BackGround
+			_: return Enums.ground_levels.MidGround
+	else:
+		match distance:
+			Enums.distance_level.Near: return Enums.fly_zone_lane.Hover
+			Enums.distance_level.Mid: return Enums.fly_zone_lane.Jump
+			Enums.distance_level.Far: return Enums.fly_zone_lane.HighRise
+			Enums.distance_level.Distant: return Enums.fly_zone_lane.Fly
+			_: return Enums.fly_zone_lane.Jump
+
+func _distance_to_scale() -> Vector2:
 	match distance_level:
-		Enums.distance_level.Close: return 0.6
-		Enums.distance_level.Near: return 0.5
-		Enums.distance_level.Mid: return 0.4
-		Enums.distance_level.Far: return 0.3
-		Enums.distance_level.Distant: return 0.2
-		_: return 0.1
+		Enums.distance_level.Close: return Vector2(0.6, 0.6)
+		Enums.distance_level.Near: return Vector2(0.5, 0.5)
+		Enums.distance_level.Mid: return Vector2(0.4, 0.4)
+		Enums.distance_level.Far: return Vector2(0.3, 0.3)
+		Enums.distance_level.Distant: return Vector2(0.2, 0.2)
+		_: return Vector2(0.1, 0.1)
+
+func _animation_frame_y_offset() -> float:
+	if sprite_frames and sprite_frames.has_animation(&"default"):
+		var frames := sprite_frames
+		if frames.get_frame_count(&"default") > 0:
+			var texture: Texture2D = frames.get_frame_texture(&"default", 0)
+			if texture:
+				return texture.get_height() * (1.0 - scale.y) * 0.5
+	return 0.0
+	
 
 func set_limits(left_x: float, right_x: float, goes_left: bool) -> void:
 	_map_border_left = left_x
@@ -178,13 +166,13 @@ func set_limits(left_x: float, right_x: float, goes_left: bool) -> void:
 		scale.x = abs(scale.x)
 
 func _move(delta: float, goes_left: bool) -> void:
-	if flightless_bird:
+	if is_flightless_bird:
 		pass # walk -> only distances allowed near, mid and far for 3 ground lanes
 	else:
 		pass # fly -> all distances allowed for 4 fly lanes
 
 	var dir: int = -1 if goes_left else 1
-	var speed_value: int = speed as int
+	var speed_value: int = speed_level as int
 	var new_x: float = clamp(global_position.x + (dir * speed_value * delta), _map_border_left, _map_border_right)
 	global_position.x = new_x
 
@@ -236,6 +224,60 @@ func _on_body_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: i
 		body_clicked = true
 		_start_resolve()
 
+func ensure_fits_view(cam: Camera2D, margin: float = 8.0) -> void:
+	if cam == null or !is_instance_valid(cam):
+		return
+
+	var max_iters := 5
+	while max_iters > 0:
+		max_iters -= 1
+		var cam_rect: Rect2 = _camera_rect(cam)
+		var r := _sprite_screen_aabb()
+
+		if cam_rect.grow(-margin).encloses(r):
+			print("Bird fits in camera view, no adjustment needed.")
+			return
+		
+		var pushed: bool = _push_to_nearer_lane()
+		if pushed:
+			global_position.y = _lane_y - _animation_frame_y_offset()
+			continue
+
+		var clamped_x: float = clamp(global_position.x, cam_rect.position.x + margin, cam_rect.end.x - margin)
+		global_position.x = clamped_x
+		break
+
+func _push_to_nearer_lane() -> bool:
+	# Move distance one step towards Close if rules allow.
+	var order := [Enums.distance_level.Distant, Enums.distance_level.Far, Enums.distance_level.Mid, Enums.distance_level.Near, Enums.distance_level.Close]
+	var idx := order.find(distance_level)
+	if idx == -1 or idx >= order.size() - 1:
+		return false
+	var next_d: Enums.distance_level = order[idx + 1]
+
+	# Respect flightless/flying constraints:
+	if is_flightless_bird:
+		if next_d == Enums.distance_level.Close or next_d == Enums.distance_level.Distant:
+			return false
+	else:
+		if next_d == Enums.distance_level.Close:
+			return false
+
+	distance_level = next_d
+	_lane_y = _distance_to_y_lane(distance_level, is_flightless_bird)
+	scale = _distance_to_scale()
+	return true
+	
+func _sprite_screen_aabb() -> Rect2:
+	# Approx AABB in world space from sprite texture size and transform.
+	var frames := sprite_frames
+	if frames == null or !frames.has_animation(&"default") or frames.get_frame_count(&"default") == 0:
+		return Rect2(global_position, Vector2(32, 32))
+	var tex := frames.get_frame_texture(&"default", 0)
+	var s: float = abs(scale.x)
+	var size := Vector2(tex.get_width() * s, tex.get_height() * s)
+	var pos := Vector2(global_position.x - size.x * 0.5, global_position.y - size.y * 0.5)
+	return Rect2(pos, size)
 
 func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 	screen_visible.emit(self, true)
@@ -250,3 +292,9 @@ func make_healthy() -> void:
 
 func is_going_left() -> bool:
 	return _goes_left
+
+func _camera_rect(cam: Camera2D) -> Rect2:
+	var vp := get_viewport().get_visible_rect().size
+	var size := Vector2(vp.x * cam.zoom.x, vp.y * cam.zoom.y)
+	var tl := cam.global_position - size * 0.5
+	return Rect2(tl, size)

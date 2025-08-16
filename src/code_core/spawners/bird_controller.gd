@@ -52,7 +52,7 @@ func _on_spawn_timer_timeout() -> void:
 		print("No more birds can be spawned or too many attempts.")
 		return
 
-	_try_spawn_bird()
+	_try_spawn_bird_once()
 	_spawn_timer.wait_time = randf_range(1.0, 3.0) # Randomize the next spawn time
 	_spawn_timer.start()
 
@@ -94,68 +94,94 @@ func _pick_bird_config() -> Dictionary:
 func _estimate_value(t: int, d: int, s: int) -> int:
 	return 3 + (t * 2) + (d * 2) + s
 
-# func _try_spawn_bird_once() -> void: 9
-
-# 	var config = _pick_bird_config()
-# 	if not config:
-# 		print("Failed to pick a valid bird configuration.")
-# 		return
-	
-# 	var scene := _scene_for_type(config.dragoon_type)
-# 	if not scene:
-# 		print("No scene found for dragoon type: ", config.dragoon_type)
-# 		return
-
-	# var bird := scene.instantiate() as AnimatedSprite2D
-
-func _try_spawn_bird() -> void:
-	spawn_attempts += 1
-	var dragoon_t: Enums.dragoon_type = Enums.dragoon_type.values()[randi() % 4]
-	var distance_level: Enums.distance_level = Enums.distance_level.values()[randi() % 5] # 0 to 4 for Close, Near, Mid, Far, Distant
-	var speed_level: Enums.speed_level = Enums.speed_level.values()[randi() % 5] # 0 to 4 for Idle, Slow, Normal, Fast, VeryFast
-
-
-	var bird_value = distance_level + dragoon_t + speed_level
-	var scene := _scene_for_type(dragoon_t)
-	if not scene:
-		print("No scene found for dragoon type: ", dragoon_t)
+func _try_spawn_bird_once() -> void:
+	var config = _pick_bird_config()
+	if not config:
+		print("Failed to pick a valid bird configuration.")
 		return
 	
-	var bird := scene.instantiate() as AnimatedSprite2D
+	var scene := _scene_for_type(config.dragoon_type)
+	if not scene:
+		print("No scene found for dragoon type: ", config.dragoon_type)
+		return
 
-	if not bird.try_construct(dragoon_t, distance_level, speed_level):
-		print("Failed to construct bird.") # bird construction can fail if distance_level is not compatible with bird type (flightless)
+	var bird := scene.instantiate() as AnimatedSprite2D
+	if not bird:
+		print("Failed to instantiate bird from scene.")
+		return
+	add_child(bird)
+
+	if not bird.call("try_construct", config.dragoon_type, config.distance_level, config.speed_level):
+		print("Failed to construct bird with the given parameters.")
 		bird.queue_free()
 		return
 
-	if spawn_attempts > 100:
-		print("Too many spawn attempts.")
-		return
+	var cam_rect := _visible_world_rect()
+	var from_left := randf() < 0.5
+	var spawn_x := (cam_rect.position.x - spawn_padding) if from_left else (cam_rect.end.x + spawn_padding)
 
-	if _remaining_spawn_limit <= 0:
-		print_debug("Spawn limit reached, cannot spawn more birds.")
-		return
+	# y is set in try_construct
+
+	bird.global_position.x = spawn_x
+	bird.call("set_limits", _min_x, _max_x, !from_left)
+
+	bird.call("ensure_fits_view", camera, 8.0)
+
+	bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
+	bird.connect("shot", Callable(self, "_on_bird_shot"))
+
+	var worth := int(bird.get("value"))
+	_remaining_spawn_limit -= worth
+
+
+# func _try_spawn_bird() -> void:
+# 	spawn_attempts += 1
+# 	var dragoon_t: Enums.dragoon_type = Enums.dragoon_type.values()[randi() % 4]
+# 	var distance_level: Enums.distance_level = Enums.distance_level.values()[randi() % 5] # 0 to 4 for Close, Near, Mid, Far, Distant
+# 	var speed_level: Enums.speed_level = Enums.speed_level.values()[randi() % 5] # 0 to 4 for Idle, Slow, Normal, Fast, VeryFast
+
+
+# 	var bird_value = distance_level + dragoon_t + speed_level
+# 	var scene := _scene_for_type(dragoon_t)
+# 	if not scene:
+# 		print("No scene found for dragoon type: ", dragoon_t)
+# 		return
 	
-	if bird_value > _remaining_spawn_limit:
-		print_debug("Not enough spawn limit left for bird value: ", bird_value)
-		_try_spawn_bird()
-		return
+# 	var bird := scene.instantiate() as AnimatedSprite2D
 
-	if bird:
-		var spawn_data := _choose_spawn_outside_viewport()
-		var spawn_pos: Vector2 = spawn_data[0]
-		var from_left: bool = spawn_data[1]
+# 	if not bird.try_construct(dragoon_t, distance_level, speed_level):
+# 		print("Failed to construct bird.") # bird construction can fail if distance_level is not compatible with bird type (flightless)
+# 		bird.queue_free()
+# 		return
 
-		bird.global_position.x = spawn_pos.x
-		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
-		bird.connect("shot", Callable(self, "_on_bird_shot"))
-		add_child(bird)
-		bird.set_limits(_min_x, _max_x, !from_left)
-		_remaining_spawn_limit -= bird_value
-		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " that goes left: ", !from_left)
-		spawn_attempts = 0
-	else:
-		push_error("Failed to instantiate bird from scene.")
+# 	if spawn_attempts > 100:
+# 		print("Too many spawn attempts.")
+# 		return
+
+# 	if _remaining_spawn_limit <= 0:
+# 		print_debug("Spawn limit reached, cannot spawn more birds.")
+# 		return
+	
+# 	if bird_value > _remaining_spawn_limit:
+# 		print_debug("Not enough spawn limit left for bird value: ", bird_value)
+# 		_try_spawn_bird()
+# 		return
+
+# 	if bird:
+# 		var spawn_data := _choose_spawn_outside_viewport()
+# 		var spawn_pos: Vector2 = spawn_data[0]
+# 		var from_left: bool = spawn_data[1]
+
+# 		bird.global_position.x = spawn_pos.x
+# 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
+# 		bird.connect("shot", Callable(self, "_on_bird_shot"))
+# 		add_child(bird)
+# 		bird.set_limits(_min_x, _max_x, !from_left)
+# 		_remaining_spawn_limit -= bird_value
+# 		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " that goes left: ", !from_left)
+# 		spawn_attempts = 0
+# 	else:
+# 		push_error("Failed to instantiate bird from scene.")
 
 func _scene_for_type(dragoon_t: Enums.dragoon_type) -> PackedScene:
 	match dragoon_t:
@@ -187,7 +213,7 @@ func _on_bird_shot(bird: AnimatedSprite2D, hit_zone: Enums.hit_zone) -> void:
 
 func _duplicate_and_bounce(original_bird: AnimatedSprite2D) -> void:
 	print("Duplicating and bouncing bird: ", original_bird.name)
-
+	
 	var scene := _scene_for_type(original_bird.dragoon_type)
 	if not scene:
 		print("No scene found for dragoon type: ", original_bird.dragoon_type)
@@ -199,9 +225,8 @@ func _duplicate_and_bounce(original_bird: AnimatedSprite2D) -> void:
 		return
 
 	add_child(duplicate_bird)
-	await duplicate_bird.ready
 
-	if not duplicate_bird.try_construct(original_bird.dragoon_type, original_bird.distance_level, original_bird.bird_speed):
+	if not duplicate_bird.try_construct(original_bird.dragoon_type, original_bird.distance_level, original_bird.speed_level):
 		print("Failed to construct duplicate bird.")
 		duplicate_bird.queue_free()
 		return
@@ -210,6 +235,7 @@ func _duplicate_and_bounce(original_bird: AnimatedSprite2D) -> void:
 	duplicate_bird.global_position.y = original_bird.global_position.y
 
 	duplicate_bird.set_limits(_min_x, _max_x, !original_bird.is_going_left())
+	duplicate_bird.ensure_fits_view(camera, 8.0)
 
 	duplicate_bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
 	duplicate_bird.connect("shot", Callable(self, "_on_bird_shot"))
