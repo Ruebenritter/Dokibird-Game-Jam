@@ -6,8 +6,8 @@ extends Control
 @export var max_ammo: int = 5
 @export var reload_time: float = 3.0
 
-@export var camera_pan_speed: float = 100.0
-@export var edge_threshold: float = 50.0
+@export var camera_pan_speed: float = 200.0
+@export var edge_threshold: float = 80.0
 
 @export var sounds: Array[Resource]
 
