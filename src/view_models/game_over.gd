@@ -7,4 +7,4 @@ func _on_retry_button_texture_pressed() -> void:
 	restart_game.emit()
 
 func set_score(score: int) -> void:
-	print("Game Over! Your score: ", score)
+	%ScoreLabel.text = str(score)
