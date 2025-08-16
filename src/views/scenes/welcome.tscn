@@ -1,7 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://d4c46uc24mjqs"]
+[gd_scene load_steps=5 format=3 uid="uid://d4c46uc24mjqs"]
 
 [ext_resource type="Texture2D" uid="uid://urxc77tsjxaw" path="res://assets/backgrounds/welcome_page_placeholder.png" id="1_rtnf0"]
 [ext_resource type="Script" uid="uid://beom4g5albvoo" path="res://view_models/welcome.gd" id="1_xl2ec"]
+
+[sub_resource type="FontVariation" id="FontVariation_xl2ec"]
+
+[sub_resource type="Theme" id="Theme_22heb"]
+default_font = SubResource("FontVariation_xl2ec")
+default_font_size = 50
 
 [node name="welcome" type="Control"]
 layout_mode = 3
@@ -29,12 +35,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -154.0
-offset_top = 30.0
-offset_right = 146.0
-offset_bottom = 180.0
+offset_left = -229.0
+offset_top = -96.0
+offset_right = 71.0
+offset_bottom = 54.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.36, 1.36)
+theme = SubResource("Theme_22heb")
 text = "START"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
