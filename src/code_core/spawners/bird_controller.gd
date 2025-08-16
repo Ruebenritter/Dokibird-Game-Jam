@@ -2,6 +2,7 @@ extends Node2D
 
 
 @export var background: NodePath
+@export var camera: Camera2D
 @export var spawn_padding := 100.0
 
 @export var egg_bird_scene: PackedScene
@@ -11,57 +12,101 @@ extends Node2D
 
 @export var spawn_limit_by_score := 1000
 @export var desired_birds_on_screen := 5
+@export var spawn_interval_min_seconds := 1.0
+@export var spawn_interval_max_seconds := 3.0
 
-@export var camera: Camera2D
 
+signal scored(value: int)
+signal bird_count_changed(count: int)
 
-signal scored
-
-var _remaining_spawn_limit := spawn_limit_by_score
-var background_bounds: Rect2
-var _min_x := -INF
-var _max_x := INF
+var _remaining_spawn_limit: int
+var _world_bounds: Rect2
+var _min_x: float
+var _max_x: float
 
 var _can_shoot := true
 
 var spawn_attempts := 0
-
 var _on_screen_count := 0
-var _regular_spawn_timer: Timer
+var _spawn_timer: Timer
 
 func _ready() -> void:
-	# Initialize bird spawners or any other setup needed
-	if not background.is_empty():
-		var bg_node := get_node(background).get_node("Sky")
-		background_bounds = Rect2(bg_node.global_position, bg_node.get_size())
-	else:
-		push_error("Background node path is not set or invalid.")
-		return
-
-	_min_x = background_bounds.position.x + spawn_padding
-	_max_x = background_bounds.position.x + background_bounds.size.x - spawn_padding
-
-	print("Background bounds: ", background_bounds)
-	randomize()
+	_remaining_spawn_limit = spawn_limit_by_score
+	_resolve_world_bounds()
 	_create_spawn_timer()
 
 func _create_spawn_timer() -> void:
-	_regular_spawn_timer = Timer.new()
-	_regular_spawn_timer.wait_time = 1.0 # Adjust the spawn interval as needed
-	_regular_spawn_timer.one_shot = true
-	_regular_spawn_timer.connect("timeout", Callable(self, "_on_spawn_timer_timeout"))
-	add_child(_regular_spawn_timer)
-	_regular_spawn_timer.start()
+	_spawn_timer = Timer.new()
+	_spawn_timer.one_shot = true
+	_spawn_timer.connect("timeout", Callable(self, "_on_spawn_timer_timeout"))
+	add_child(_spawn_timer)
+	_restart_spawn_timer()
+
+func _restart_spawn_timer() -> void:
+	_spawn_timer.wait_time = randf_range(spawn_interval_min_seconds, spawn_interval_max_seconds)
+	_spawn_timer.start()
 
 func _on_spawn_timer_timeout() -> void:
-	_try_spawn_bird()
 	if _remaining_spawn_limit <= 0 or spawn_attempts > 100:
-		_regular_spawn_timer.stop()
+		_spawn_timer.stop()
 		print("No more birds can be spawned or too many attempts.")
 		return
-	_regular_spawn_timer.wait_time = randf_range(1.0, 3.0) # Randomize the next spawn time
-	_regular_spawn_timer.start()
 
+	_try_spawn_bird()
+	_spawn_timer.wait_time = randf_range(1.0, 3.0) # Randomize the next spawn time
+	_spawn_timer.start()
+
+func _resolve_world_bounds() -> void:
+	if background.is_empty():
+		push_error("Background node path is not set or invalid.")
+		return
+	
+	var sky_node = get_node(background).get_node("Sky") as TextureRect
+
+	if not sky_node or not sky_node.texture:
+		push_error("Sky texture is not set or invalid.")
+		return
+
+	_world_bounds = Rect2(sky_node.global_position, sky_node.size)
+	_min_x = _world_bounds.position.x
+	_max_x = _world_bounds.position.x + _world_bounds.size.x
+
+
+func _pick_bird_config() -> Dictionary:
+	var tries := 8
+	while tries > 0:
+		tries -= 1
+		var dragoon_type: Enums.dragoon_type = Enums.dragoon_type.values()[randi() % 4]
+		var distance_level: Enums.distance_level = Enums.distance_level.values()[randi() % 5]
+		var speed_level: Enums.speed_level = Enums.speed_level.values()[randi() % 5]
+
+		var value_estimate := _estimate_value(dragoon_type, distance_level, speed_level)
+		if value_estimate <= _remaining_spawn_limit:
+			return {
+				"dragoon_type": dragoon_type,
+				"distance_level": distance_level,
+				"speed_level": speed_level,
+				"value_estimate": value_estimate
+			}
+		print("Failed to pick a valid bird config, trying again...")
+	return {}
+
+func _estimate_value(t: int, d: int, s: int) -> int:
+	return 3 + (t * 2) + (d * 2) + s
+
+# func _try_spawn_bird_once() -> void: 9
+
+# 	var config = _pick_bird_config()
+# 	if not config:
+# 		print("Failed to pick a valid bird configuration.")
+# 		return
+	
+# 	var scene := _scene_for_type(config.dragoon_type)
+# 	if not scene:
+# 		print("No scene found for dragoon type: ", config.dragoon_type)
+# 		return
+
+	# var bird := scene.instantiate() as AnimatedSprite2D
 
 func _try_spawn_bird() -> void:
 	spawn_attempts += 1
@@ -133,10 +178,45 @@ func _on_bird_shot(bird: AnimatedSprite2D, hit_zone: Enums.hit_zone) -> void:
 			pass
 		_on_screen_count = max(0, _on_screen_count - 1)
 	elif hit_zone == Enums.hit_zone.Body:
-		pass # duplicate bird
+		if bird.is_sick:
+			_duplicate_and_bounce(bird)
+
 	else:
 		print("Unknown hit zone: ", hit_zone)
 
+
+func _duplicate_and_bounce(original_bird: AnimatedSprite2D) -> void:
+	print("Duplicating and bouncing bird: ", original_bird.name)
+
+	var scene := _scene_for_type(original_bird.dragoon_type)
+	if not scene:
+		print("No scene found for dragoon type: ", original_bird.dragoon_type)
+		return
+	
+	var duplicate_bird := scene.instantiate() as AnimatedSprite2D
+	if not duplicate_bird:
+		print("Failed to instantiate duplicate bird.")
+		return
+
+	add_child(duplicate_bird)
+	await duplicate_bird.ready
+
+	if not duplicate_bird.try_construct(original_bird.dragoon_type, original_bird.distance_level, original_bird.bird_speed):
+		print("Failed to construct duplicate bird.")
+		duplicate_bird.queue_free()
+		return
+
+	duplicate_bird.global_position.x = original_bird.global_position.x + 1.0
+	duplicate_bird.global_position.y = original_bird.global_position.y
+
+	duplicate_bird.set_limits(_min_x, _max_x, !original_bird.is_going_left())
+
+	duplicate_bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
+	duplicate_bird.connect("shot", Callable(self, "_on_bird_shot"))
+
+	print("Duplicated bird: ", duplicate_bird.name, " at position: ", duplicate_bird.global_position)
+
+	
 func _on_bird_screen_visible(_bird: Node2D, bird_visible: bool) -> void:
 	if bird_visible:
 		_on_screen_count += 1

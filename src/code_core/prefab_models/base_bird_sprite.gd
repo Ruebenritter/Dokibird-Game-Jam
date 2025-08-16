@@ -8,12 +8,21 @@ signal screen_visible
 @export var distance_level: Enums.distance_level = Enums.distance_level.Close
 @export var flightless_bird := false
 #@export var bird_skins: Array[Resource]
+@export var squeak_sounds: Array[Resource]
 
 
 var _map_border_left := -INF
 var _map_border_right := INF
 var _lane_y: float = 0.0
 var _goes_left := true
+
+enum MoveState {
+	Default,
+	Kockback,
+}
+var _move_state: MoveState = MoveState.Default
+var _knock_velocity: float = 0.0
+var _knock_duration: float = 0.0
 
 # Shooting
 var head_clicked := false
@@ -26,15 +35,44 @@ var is_sick: bool = true
 # visuals
 var _texture_y_offset: float = 0.0
 
+# sounds
+var _headshot_squeak: sfx
+var _bodyshot_squeak: sfx
+var _spawn_sound: sfx
+
 func _ready() -> void:
 	_debounce_hits()
+
+	_sort_sounds()
 	if is_sick:
 		play("sick")
 	else:
 		play("default")
 
+	%BirdNoiser.stream = _spawn_sound.sound_effect
+	%BirdNoiser.play()
+
 func _process(delta: float) -> void:
-	_move(delta, _goes_left)
+	if _move_state == MoveState.Kockback:
+		global_position.x = clamp(global_position.x + _knock_velocity * delta, _map_border_left, _map_border_right)
+		_knock_velocity = move_toward(_knock_velocity, 0.0, 3000.0 * delta)
+		_knock_duration -= delta
+		if _knock_duration <= 0.0:
+			_move_state = MoveState.Default
+	else:
+		_move(delta, _goes_left)
+
+func _sort_sounds() -> void:
+	if not squeak_sounds.is_empty():
+		for sound in squeak_sounds:
+			match sound.sfx_type:
+				Enums.sfx_type.BirdSqueak_Good:
+					_headshot_squeak = sound
+				Enums.sfx_type.BirdSqueak_Bad:
+					_bodyshot_squeak = sound
+				Enums.sfx_type.Spawn:
+					_spawn_sound = sound
+				_: break
 
 func _debounce_hits() -> void:
 	resolve_timer = Timer.new()
@@ -155,6 +193,12 @@ func _move(delta: float, goes_left: bool) -> void:
 		#global_position.y = _lane_y + (randf() * 20 - 10) # Randomize Y position slightly when changing direction
 		scale.x = scale.x * -1 # Flip the sprite when changing direction
 
+func start_knockback(left: bool, velocity: float, duration: float) -> void:
+	print("Starting knockback: left=%s, velocity=%s, duration=%s" % [left, velocity, duration])
+	_move_state = MoveState.Kockback
+	_knock_velocity = velocity * (-1 if left else 1)
+	_knock_duration = duration
+
 # Hit handling
 func _start_resolve() -> void:
 	if resolve_timer.is_stopped():
@@ -168,9 +212,13 @@ func _on_resolve_timeout() -> void:
 
 func handle_head_shot() -> void:
 	print("Headshot detected on dragoon of type: ", dragoon_type)
+	%BirdNoiser.stream = _headshot_squeak.sound_effect
+	%BirdNoiser.play()
 	shot.emit(self, Enums.hit_zone.Head)
 
 func handle_body_shot() -> void:
+	%BirdNoiser.stream = _bodyshot_squeak.sound_effect
+	%BirdNoiser.play()
 	print("Body shot detected on dragoon of type: ", dragoon_type)
 	shot.emit(self, Enums.hit_zone.Body)
 
@@ -199,3 +247,6 @@ func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 func make_healthy() -> void:
 	is_sick = false
 	play("default")
+
+func is_going_left() -> bool:
+	return _goes_left

@@ -112,8 +112,8 @@ func _play_sound(sound: sfx) -> void:
 		push_error("Sound effect is not set or invalid.")
 		return
 
-	# %AudioStreamPlayer.volume_db = sound.volume
-	# %AudioStreamPlayer.pitch_scale = sound.pitch
+	%AudioStreamPlayer.volume_db = sound.volume
+	%AudioStreamPlayer.pitch_scale = sound.pitch
 	%AudioStreamPlayer.stream = sound.sound_effect
 	%AudioStreamPlayer.play()
 

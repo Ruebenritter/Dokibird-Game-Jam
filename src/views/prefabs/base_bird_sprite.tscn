@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://rd67unskufc0"]
+[gd_scene load_steps=8 format=3 uid="uid://rd67unskufc0"]
 
 [ext_resource type="Texture2D" uid="uid://ct7v11uemwvxp" path="res://assets/character_sprites/Ball Dragoon Prototype.png" id="1_kqgwn"]
 [ext_resource type="Script" uid="uid://cslkh4vlf8fih" path="res://code_core/prefab_models/base_bird_sprite.gd" id="1_uxhhu"]
+[ext_resource type="Resource" uid="uid://dsyue2trcl3q4" path="res://resources/sfx/squeak_bodyshot.tres" id="3_iedaf"]
+[ext_resource type="Resource" uid="uid://dtoudd8lvg6tm" path="res://resources/sfx/squeak_heashot.tres" id="4_bl6i8"]
+[ext_resource type="Resource" uid="uid://s5vcwfblcjbw" path="res://resources/sfx/spawn_sound.tres" id="5_bl6i8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xbwmo"]
 atlas = ExtResource("1_kqgwn")
@@ -21,6 +24,10 @@ animations = [{
 [node name="BirdSprite" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_iedaf")
 script = ExtResource("1_uxhhu")
+squeak_sounds = Array[Resource]([ExtResource("3_iedaf"), ExtResource("4_bl6i8"), ExtResource("5_bl6i8")])
+
+[node name="BirdNoiser" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
 
 [node name="BodyArea" type="Area2D" parent="."]
 unique_name_in_owner = true

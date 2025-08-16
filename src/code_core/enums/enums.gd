@@ -51,4 +51,6 @@ enum sfx_type {
 	Click,
 	StartAlarm,
 	EndAlarm,
+	BirdSqueak_Good,
+	BirdSqueak_Bad
 }

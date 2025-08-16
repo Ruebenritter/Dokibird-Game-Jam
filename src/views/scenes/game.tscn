@@ -53,6 +53,7 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="LaneVisuals" parent="." instance=ExtResource("9_nmau5")]
+enabled = false
 width = 5000.0
 
 [node name="MainCamera" type="Camera2D" parent="."]
@@ -159,11 +160,11 @@ alignment = 2
 unique_name_in_owner = true
 script = ExtResource("7_cc5fq")
 background = NodePath("../Frame/Background")
+camera = NodePath("../MainCamera")
 egg_bird_scene = ExtResource("8_2lnj0")
 long_bird_scene = ExtResource("9_sb8le")
 chonky_bird_scene = ExtResource("10_jgi6j")
 regular_bird_scene = ExtResource("11_56iah")
-camera = NodePath("../MainCamera")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 unique_name_in_owner = true

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8wkxadncgbfk"]
+[gd_scene load_steps=6 format=3 uid="uid://b8wkxadncgbfk"]
 
 [ext_resource type="Script" uid="uid://bvvjwsf1d0fxl" path="res://view_models/main.gd" id="1_ix16s"]
 [ext_resource type="PackedScene" uid="uid://d4c46uc24mjqs" path="res://views/scenes/welcome.tscn" id="2_dodr4"]
 [ext_resource type="PackedScene" uid="uid://bh8551xlobrhx" path="res://views/scenes/game.tscn" id="3_pgnnd"]
 [ext_resource type="PackedScene" uid="uid://bgvs1aoveoq78" path="res://views/scenes/game_over.tscn" id="4_l10sc"]
+[ext_resource type="AudioStream" uid="uid://36cr2mcasnfe" path="res://audio/music/bgm.mp3" id="5_pgnnd"]
 
 [node name="main" type="Control"]
 layout_mode = 3
@@ -17,3 +18,7 @@ script = ExtResource("1_ix16s")
 startup_scene = ExtResource("2_dodr4")
 game_scene = ExtResource("3_pgnnd")
 game_over_scene = ExtResource("4_l10sc")
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_pgnnd")
+autoplay = true

@@ -38,13 +38,13 @@ frame_progress = 0.440496
 distance_level = 10
 flightless_bird = true
 
-[node name="CollisionPolygon2D" parent="HeadArea" index="0"]
-position = Vector2(3, -2)
-polygon = PackedVector2Array(26, 122, 74, 133, 130, 128, 157, 95, 114, 58, 85, 34, 78, 62, 68, 62, 65, 79, 44, 81, 43, 96)
-
 [node name="CollisionPolygon2D" parent="BodyArea" index="0"]
 position = Vector2(1, 6)
 polygon = PackedVector2Array(-9, -180, -59, -160, -114, -124, -153, -38, -152, 35, -129, 89, -84, 123, -39, 133, 6, 127, 39, 116, 94, 42, 91, -11, 71, -94, 29, -154)
 
-[node name="VisibleOnScreenNotifier2D" parent="." index="2"]
+[node name="CollisionPolygon2D" parent="HeadArea" index="0"]
+position = Vector2(3, -2)
+polygon = PackedVector2Array(26, 122, 74, 133, 130, 128, 157, 95, 114, 58, 85, 34, 78, 62, 68, 62, 65, 79, 44, 81, 43, 96)
+
+[node name="VisibleOnScreenNotifier2D" parent="." index="3"]
 position = Vector2(-7, 19)
