@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="sfx" load_steps=3 format=3 uid="uid://dtoudd8lvg6tm"]
+[gd_resource type="Resource" script_class="sfx" load_steps=3 format=3 uid="uid://lxo7pvp3kxlc"]
 
 [ext_resource type="Script" uid="uid://pci2h6k3q5ko" path="res://code_core/data/sfx.gd" id="1_7rn6e"]
 [ext_resource type="AudioStream" uid="uid://8bmv4m3ngfi6" path="res://audio/sfx/squeak headshot.wav" id="2_d1ncx"]
@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_7rn6e")
 sound_effect = ExtResource("2_d1ncx")
-volume = 1.0
+volume = 3.0
 pitch = 1.0
 sfx_type = 7
 metadata/_custom_type_script = "uid://pci2h6k3q5ko"

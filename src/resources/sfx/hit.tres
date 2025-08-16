@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_owl8b")
 sound_effect = ExtResource("2_g8ex6")
-volume = 1.0
+volume = -0.5
 pitch = 1.0
 sfx_type = 1
 metadata/_custom_type_script = "uid://pci2h6k3q5ko"
