@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp7mqlxr61dsu"]
+
+[ext_resource type="Texture2D" uid="uid://bhe8pprcmop44" path="res://assets/prop_sprites/Dart Proto.png" id="1"]
+[ext_resource type="Script" uid="uid://duoshhfpr40g2" path="res://view_models/dart.gd" id="1_4qrtc"]
+
+[node name="dart" type="PanelContainer"]
+self_modulate = Color(1, 1, 1, 0)
+offset_right = 128.0
+offset_bottom = 128.0
+script = ExtResource("1_4qrtc")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1")
+stretch_mode = 5

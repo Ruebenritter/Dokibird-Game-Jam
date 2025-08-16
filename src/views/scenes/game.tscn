@@ -1,0 +1,184 @@
+[gd_scene load_steps=17 format=3 uid="uid://bh8551xlobrhx"]
+
+[ext_resource type="Script" uid="uid://7qflgr7y8rr4" path="res://view_models/game_viewmodel.gd" id="1_h27ot"]
+[ext_resource type="PackedScene" uid="uid://c20f0w8iuf7v6" path="res://views/components/crosshair_sprite.tscn" id="2_tiy8y"]
+[ext_resource type="PackedScene" uid="uid://bp7mqlxr61dsu" path="res://views/prefabs/dart.tscn" id="3_dq4r2"]
+[ext_resource type="Resource" uid="uid://cgn1m63i7cbea" path="res://resources/sfx/hit.tres" id="4_dq4r2"]
+[ext_resource type="PackedScene" uid="uid://ceknfff6cue5e" path="res://views/components/background.tscn" id="5_mcyuj"]
+[ext_resource type="Resource" uid="uid://bevuwr7q8qdvp" path="res://resources/sfx/reload.tres" id="5_nmau5"]
+[ext_resource type="Resource" uid="uid://jhnf1oofot3e" path="res://resources/sfx/shot.tres" id="6_mcyuj"]
+[ext_resource type="Texture2D" uid="uid://c7y4pc4ldltng" path="res://assets/backgrounds/Dokibird_Game_Jam_rough_for_leon_hd.png" id="6_x01tu"]
+[ext_resource type="Script" uid="uid://dlam6eqwfhsur" path="res://code_core/spawners/bird_controller.gd" id="7_cc5fq"]
+[ext_resource type="PackedScene" uid="uid://c4tmxwqrjhcdg" path="res://views/prefabs/egg_bird.tscn" id="8_2lnj0"]
+[ext_resource type="PackedScene" uid="uid://b5ir54suxdymc" path="res://views/prefabs/long_bird.tscn" id="9_sb8le"]
+[ext_resource type="PackedScene" uid="uid://mo8adwwypubx" path="res://views/prefabs/chonky_bird.tscn" id="10_jgi6j"]
+[ext_resource type="PackedScene" uid="uid://b5u4cgp6o5bij" path="res://views/prefabs/regular_bird.tscn" id="11_56iah"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ix16s"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_dodr4"]
+font_size = 60
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ny5kc"]
+
+[node name="game" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+mouse_default_cursor_shape = 3
+script = ExtResource("1_h27ot")
+cursor_scene = ExtResource("2_tiy8y")
+ammo_scene = ExtResource("3_dq4r2")
+camera_pan_speed = 500.0
+sounds = Array[Resource]([ExtResource("4_dq4r2"), ExtResource("5_nmau5"), ExtResource("6_mcyuj")])
+
+[node name="Frame" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_ix16s")
+
+[node name="BackgroundControl" parent="Frame" instance=ExtResource("5_mcyuj")]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="BackgroundTexture" type="TextureRect" parent="Frame/BackgroundControl"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5785.0
+offset_top = -540.0
+offset_right = 5785.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_x01tu")
+
+[node name="MainCamera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="HUDFrame" type="PanelContainer" parent="HUD"]
+self_modulate = Color(1, 1, 0.941176, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HUD/HUDFrame"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="LeftSplit" type="VBoxContainer" parent="HUD/HUDFrame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="TopLeft" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit/TopLeft"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 8
+
+[node name="TimeLabel" type="Label" parent="HUD/HUDFrame/HBoxContainer/LeftSplit/TopLeft/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "TIME LEFT LABEL"
+label_settings = SubResource("LabelSettings_dodr4")
+
+[node name="BottomLeft" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/LeftSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="RightSplit" type="VBoxContainer" parent="HUD/HUDFrame/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="TopRight" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/TopRight"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 20
+
+[node name="ScoreLabel" type="Label" parent="HUD/HUDFrame/HBoxContainer/RightSplit/TopRight/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+text = "SCORE LABEL"
+label_settings = SubResource("LabelSettings_dodr4")
+
+[node name="BottomRight" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 300
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="AmmoContainer" type="PanelContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer"]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ny5kc")
+
+[node name="AmmoRow" type="HBoxContainer" parent="HUD/HUDFrame/HBoxContainer/RightSplit/BottomRight/MarginContainer/AmmoContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="BirdControl" type="Node2D" parent="." node_paths=PackedStringArray("camera")]
+unique_name_in_owner = true
+script = ExtResource("7_cc5fq")
+background = NodePath("../Frame/BackgroundControl/BackgroundTexture")
+egg_bird_scene = ExtResource("8_2lnj0")
+long_bird_scene = ExtResource("9_sb8le")
+chonky_bird_scene = ExtResource("10_jgi6j")
+regular_bird_scene = ExtResource("11_56iah")
+camera = NodePath("../MainCamera")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+
+[connection signal="scored" from="BirdControl" to="." method="_on_bird_control_scored"]
