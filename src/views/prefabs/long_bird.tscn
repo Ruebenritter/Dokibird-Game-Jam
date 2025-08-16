@@ -1,25 +1,39 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5ir54suxdymc"]
+[gd_scene load_steps=7 format=3 uid="uid://b5ir54suxdymc"]
 
 [ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="1_c72bg"]
 [ext_resource type="Texture2D" uid="uid://dd0es1ldolbgv" path="res://assets/character_sprites/long_fly1.png" id="2_gtffa"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sd1gr"]
-atlas = ExtResource("2_gtffa")
-region = Rect2(0, 0, 484, 1007)
+[ext_resource type="Texture2D" uid="uid://htis1vhegyyn" path="res://assets/character_sprites/long_fly2.png" id="3_mw6t1"]
+[ext_resource type="Texture2D" uid="uid://cwfphbuh7uwhj" path="res://assets/character_sprites/long_sick_fly1.png" id="4_xt7to"]
+[ext_resource type="Texture2D" uid="uid://dx0g3bw7dy55w" path="res://assets/character_sprites/long_sick_fly2.png" id="5_mvgws"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vhl75"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sd1gr")
+"texture": ExtResource("2_gtffa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_mw6t1")
 }],
 "loop": true,
 "name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_xt7to")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mvgws")
+}],
+"loop": true,
+"name": &"sick",
 "speed": 5.0
 }]
 
 [node name="BirdSprite" instance=ExtResource("1_c72bg")]
 sprite_frames = SubResource("SpriteFrames_vhl75")
+frame_progress = 0.720087
 dragoon_type = 1
 distance_level = 20
 

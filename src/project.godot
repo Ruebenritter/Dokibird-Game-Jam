@@ -19,6 +19,7 @@ config/icon="res://assets/icons/icon.png"
 
 window/size/viewport_width=1920
 window/size/viewport_height=1080
+window/size/mode=4
 
 [file_customization]
 
@@ -45,6 +46,8 @@ common/enable_pause_aware_picking=true
 
 [rendering]
 
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_environment="res://themes/default_env.tres"
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true

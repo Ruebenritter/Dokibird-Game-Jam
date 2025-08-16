@@ -31,14 +31,14 @@ enum hit_zone {
 }
 
 enum ground_levels {
-	ForeGround = 950,
-	MidGround = 900,
-	BackGround = 850,
+	ForeGround = 1060,
+	MidGround = 990,
+	BackGround = 930,
 }
 
 enum fly_zone_lane {
-	Hover = 750,
-	Jump = 700,
+	Hover = 800,
+	Jump = 600,
 	HighRise = 400,
 	Fly = 250,
 }

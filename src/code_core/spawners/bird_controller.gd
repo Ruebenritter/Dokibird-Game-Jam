@@ -101,7 +101,7 @@ func _try_spawn_bird() -> void:
 		var spawn_pos: Vector2 = spawn_data[0]
 		var dir: int = spawn_data[1]
 
-		bird.global_position = spawn_pos
+		bird.global_position.x = spawn_pos.x
 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
 		bird.connect("shot", Callable(self, "_on_bird_shot"))
 		add_child(bird)

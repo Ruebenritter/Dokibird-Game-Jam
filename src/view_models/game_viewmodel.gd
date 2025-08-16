@@ -36,7 +36,7 @@ func _ready() -> void:
 	#Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 	_viewport_size = get_viewport().get_visible_rect().size
 
-	%MainCamera.position = size / 2
+	%MainCamera.position = %Frame.size / 2
 	_fixed_y = %MainCamera.position.y
 	_calc_level_limits()
 
@@ -171,7 +171,7 @@ func _on_countdown_timer_timeout() -> void:
 
 
 func format_time(seconds: int) -> String:
-	var minutes := seconds / 60
+	var minutes := seconds / 60.0
 	var secs := seconds % 60
 	return "%02d:%02d" % [minutes, secs]
 

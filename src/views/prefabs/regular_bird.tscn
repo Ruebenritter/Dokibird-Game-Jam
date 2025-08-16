@@ -1,31 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://b5u4cgp6o5bij"]
+[gd_scene load_steps=7 format=3 uid="uid://b5u4cgp6o5bij"]
 
 [ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="1_hp30c"]
 [ext_resource type="Texture2D" uid="uid://8rh2dhrq26an" path="res://assets/character_sprites/regular_fly1.png" id="2_hp30c"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6pj52"]
-atlas = ExtResource("2_hp30c")
-region = Rect2(0, 0, 481, 470)
+[ext_resource type="Texture2D" uid="uid://b57lpil5woeub" path="res://assets/character_sprites/regular_fly2.png" id="3_hgwja"]
+[ext_resource type="Texture2D" uid="uid://burfrb6gur6gc" path="res://assets/character_sprites/regular_sick_fly1.png" id="4_ogxf5"]
+[ext_resource type="Texture2D" uid="uid://682d24ukrruk" path="res://assets/character_sprites/regular_sick_fly2.png" id="5_o5w8e"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dplcn"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_6pj52")
+"texture": ExtResource("2_hp30c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hgwja")
 }],
 "loop": true,
-"name": &"idle",
-"speed": 5.0
+"name": &"default",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_ogxf5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_o5w8e")
+}],
+"loop": true,
+"name": &"sick",
+"speed": 7.0
 }]
 
 [node name="BirdSprite" instance=ExtResource("1_hp30c")]
 sprite_frames = SubResource("SpriteFrames_dplcn")
-animation = &"idle"
+frame_progress = 0.240369
 dragoon_type = 2
 distance_level = 15
 
 [node name="CollisionPolygon2D" parent="HeadArea" index="0"]
-polygon = PackedVector2Array(-69, -2, -31, 47, -85, 66, -122, 29)
+polygon = PackedVector2Array(-58, -51, 39, -22, 53, 64, -4, 89, -80, 100, -143, 65, -163, 12, -131, -39)
 
 [node name="CollisionPolygon2D" parent="BodyArea" index="0"]
-polygon = PackedVector2Array(-73, -150, -23, -203, 75, -238, 87, -195, 89, -160, 115, -175, 139, -173, 142, -132, 135, -103, 164, -71, 190, -11, 192, 44, 190, 74, 243, 78, 239, 94, 192, 137, 109, 175, 18, 190, -97, 181, -165, 150, -207, 102, -214, 50, -208, 13, -194, -39, -156, -97, -110, -136)
+polygon = PackedVector2Array(-70, -143, -15, -195, 76, -217, 88, -187, 91, -137, 112, -151, 136, -153, 144, -115, 138, -82, 157, -66, 190, -11, 192, 44, 193, 94, 239, 104, 233, 126, 193, 154, 114, 192, 18, 210, -100, 189, -172, 155, -211, 101, -243, 45, -208, 13, -194, -39, -150, -95, -106, -130)

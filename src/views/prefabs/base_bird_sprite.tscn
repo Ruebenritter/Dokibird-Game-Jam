@@ -1,8 +1,25 @@
-[gd_scene load_steps=2 format=3 uid="uid://rd67unskufc0"]
+[gd_scene load_steps=5 format=3 uid="uid://rd67unskufc0"]
 
+[ext_resource type="Texture2D" uid="uid://ct7v11uemwvxp" path="res://assets/character_sprites/Ball Dragoon Prototype.png" id="1_kqgwn"]
 [ext_resource type="Script" uid="uid://cslkh4vlf8fih" path="res://code_core/prefab_models/base_bird_sprite.gd" id="1_uxhhu"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_xbwmo"]
+atlas = ExtResource("1_kqgwn")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iedaf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xbwmo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="BirdSprite" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_iedaf")
 script = ExtResource("1_uxhhu")
 
 [node name="HeadArea" type="Area2D" parent="."]

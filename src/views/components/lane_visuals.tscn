@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqtd3sp3bkixu"]
+
+[ext_resource type="Script" uid="uid://dl0epkpgu3sfy" path="res://view_models/lane_debug.gd" id="1_hsiid"]
+
+[node name="LaneVisuals" type="Node2D"]
+script = ExtResource("1_hsiid")
