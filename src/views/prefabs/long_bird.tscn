@@ -33,7 +33,7 @@ animations = [{
 
 [node name="BirdSprite" instance=ExtResource("1_c72bg")]
 sprite_frames = SubResource("SpriteFrames_vhl75")
-frame_progress = 0.720087
+frame_progress = 0.839207
 dragoon_type = 1
 distance_level = 20
 

@@ -31,7 +31,7 @@ enum hit_zone {
 }
 
 enum ground_levels {
-	ForeGround = 1060,
+	ForeGround = 1050,
 	MidGround = 990,
 	BackGround = 930,
 }

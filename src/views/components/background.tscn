@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://ceknfff6cue5e"]
 
-[ext_resource type="Script" uid="uid://djxx7ipyev4v" path="res://view_models/background_layer_control.gd" id="1_lurvf"]
+[ext_resource type="Script" path="res://view_models/background_layer_control.gd" id="1_lurvf"]
 [ext_resource type="Texture2D" uid="uid://crbqdkxipfom0" path="res://assets/backgrounds/bg01_sky.png" id="2_glyur"]
 [ext_resource type="Texture2D" uid="uid://dk7bfeqmyf6jq" path="res://assets/backgrounds/bg02_crowky.png" id="3_c1slw"]
 [ext_resource type="Texture2D" uid="uid://bqiwg70ugm7v" path="res://assets/backgrounds/bg03_clouds.png" id="4_p22fv"]
@@ -31,7 +31,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
+mouse_filter = 1
 script = ExtResource("1_lurvf")
 
 [node name="Sky" type="TextureRect" parent="."]
@@ -47,7 +47,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("2_glyur")
 
 [node name="Crowky" type="TextureRect" parent="."]
@@ -63,7 +62,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("3_c1slw")
 
 [node name="Clouds" type="TextureRect" parent="."]
@@ -79,7 +77,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("4_p22fv")
 
 [node name="MoreClouds" type="TextureRect" parent="."]
@@ -95,7 +92,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("5_0prhu")
 
 [node name="City" type="TextureRect" parent="."]
@@ -111,7 +107,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("6_d18ko")
 
 [node name="City2" type="TextureRect" parent="."]
@@ -127,7 +122,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("7_no4sj")
 
 [node name="CityGround" type="TextureRect" parent="."]
@@ -143,7 +137,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("8_a85o0")
 
 [node name="BuildingsGrouped" type="TextureRect" parent="."]
@@ -160,7 +153,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("9_xn44s")
 
 [node name="Building01" type="TextureRect" parent="."]
@@ -177,7 +169,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("10_82mbm")
 
 [node name="Building02" type="TextureRect" parent="."]
@@ -194,7 +185,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("11_eyihy")
 
 [node name="Building03" type="TextureRect" parent="."]
@@ -211,7 +201,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("12_1qnqf")
 
 [node name="Building04" type="TextureRect" parent="."]
@@ -227,7 +216,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("13_avo1w")
 
 [node name="Building05" type="TextureRect" parent="."]
@@ -243,7 +231,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("14_aggp3")
 
 [node name="FarmMountains" type="TextureRect" parent="."]
@@ -259,7 +246,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("15_uuscq")
 
 [node name="FarmHills" type="TextureRect" parent="."]
@@ -275,7 +261,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("16_6wrbd")
 
 [node name="FarmTrees" type="TextureRect" parent="."]
@@ -291,7 +276,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("17_xqx3a")
 
 [node name="FarmGrass" type="TextureRect" parent="."]
@@ -307,7 +291,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("18_q6y4r")
 
 [node name="FarmBushes" type="TextureRect" parent="."]
@@ -323,7 +306,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("19_6qiq4")
 
 [node name="FarmTomatoes" type="TextureRect" parent="."]
@@ -339,7 +321,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("20_8eraf")
 
 [node name="FarmSign" type="TextureRect" parent="."]
@@ -355,7 +336,6 @@ offset_right = 5785.0
 offset_bottom = 540.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("21_qi5ny")
 
 [node name="Windmill" type="TextureRect" parent="."]
@@ -371,7 +351,6 @@ offset_right = 5570.0
 offset_bottom = 569.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
 texture = ExtResource("22_bfb4j")
 
 [node name="WindmillOrigin" type="Node2D" parent="Windmill"]

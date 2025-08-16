@@ -21,12 +21,17 @@ var body_clicked := false
 var resolve_timer: Timer
 var value: int = 0
 
+var is_sick: bool = true
+
 # visuals
 var _texture_y_offset: float = 0.0
 
 func _ready() -> void:
 	_debounce_hits()
-	play("default")
+	if is_sick:
+		play("sick")
+	else:
+		play("default")
 
 func _process(delta: float) -> void:
 	_move(delta, _goes_left)
@@ -70,7 +75,7 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 			return false
 
 	# flying birds cannot be close or idle
-	if not flightless_bird and (distance == Enums.distance_level.Close or distance == Enums.speed_level.Idle):
+	if not flightless_bird and (distance == Enums.distance_level.Close or bird_speed == Enums.speed_level.Idle):
 		print("Flying birds cannot be spawned at Close distance.")
 		return false
 
@@ -100,7 +105,6 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 		var frame_tex: Texture2D = sprite_frames.get_frame_texture(anim, 0)
 		if frame_tex:
 			_texture_y_offset = frame_tex.get_height() * (1.0 - scale_1d) / 2.0
-			offset = Vector2(0, _texture_y_offset)
 	else:
 		push_warning("No 'default' animation found on %s" % name)
 
@@ -191,3 +195,7 @@ func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
 
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
 	screen_visible.emit(self, false)
+
+func make_healthy() -> void:
+	is_sick = false
+	play("default")

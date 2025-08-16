@@ -22,19 +22,20 @@ animations = [{
 sprite_frames = SubResource("SpriteFrames_iedaf")
 script = ExtResource("1_uxhhu")
 
-[node name="HeadArea" type="Area2D" parent="."]
-unique_name_in_owner = true
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea"]
-
 [node name="BodyArea" type="Area2D" parent="."]
 unique_name_in_owner = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="BodyArea"]
 
+[node name="HeadArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+z_index = 1
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HeadArea"]
+
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[connection signal="input_event" from="HeadArea" to="." method="_on_head_area_input_event"]
 [connection signal="input_event" from="BodyArea" to="." method="_on_body_area_input_event"]
+[connection signal="input_event" from="HeadArea" to="." method="_on_head_area_input_event"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

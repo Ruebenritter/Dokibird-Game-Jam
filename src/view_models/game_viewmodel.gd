@@ -40,7 +40,7 @@ func _ready() -> void:
 	_fixed_y = %MainCamera.position.y
 	_calc_level_limits()
 
-	#_reload()
+	_reload()
 
 	# Countdown Timer
 	_countdownTimer = Timer.new()
@@ -152,12 +152,16 @@ func _clear_ammo_items() -> void:
 		child.queue_free()
 
 func _calc_level_limits() -> void:
-	if !%BackgroundTexture.texture:
+	if !%Background:
 		return
 
-	var texture_size = %BackgroundTexture.texture.get_size()
-	_min_x = - texture_size.x / 2
-	_max_x = texture_size.x / 2
+	var sky = %Background.get_node("Sky") as TextureRect
+	if not sky or not sky.texture:
+		push_error("Sky texture is not set or invalid.")
+		return
+	var sky_size = sky.size
+	_min_x = - sky_size.x / 2
+	_max_x = sky_size.x / 2 # this assumes the sky is centered at (0, 0)
 
 func _on_countdown_timer_timeout() -> void:
 	countdown_time_seconds -= 1

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="sfx" load_steps=3 format=3 uid="uid://dcpoisxnnlw40"]
+
+[ext_resource type="Script" uid="uid://pci2h6k3q5ko" path="res://code_core/data/sfx.gd" id="1_5cqcw"]
+[ext_resource type="AudioStream" uid="uid://bquq2o24ooj7o" path="res://audio/sfx/3 sec countdown.mp3" id="2_3kjvm"]
+
+[resource]
+script = ExtResource("1_5cqcw")
+sound_effect = ExtResource("2_3kjvm")
+volume = 1.0
+pitch = 1.0
+sfx_type = 5
+metadata/_custom_type_script = "uid://pci2h6k3q5ko"

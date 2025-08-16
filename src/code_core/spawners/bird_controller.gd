@@ -32,10 +32,11 @@ var _regular_spawn_timer: Timer
 func _ready() -> void:
 	# Initialize bird spawners or any other setup needed
 	if not background.is_empty():
-		var bg_node := get_node(background)
+		var bg_node := get_node(background).get_node("Sky")
 		background_bounds = Rect2(bg_node.global_position, bg_node.get_size())
 	else:
-		background_bounds = Rect2(Vector2(-500, -500), Vector2(1000, 1000)) # Default bounds if no background
+		push_error("Background node path is not set or invalid.")
+		return
 
 	_min_x = background_bounds.position.x + spawn_padding
 	_max_x = background_bounds.position.x + background_bounds.size.x - spawn_padding
@@ -106,7 +107,7 @@ func _try_spawn_bird() -> void:
 		add_child(bird)
 		bird.set_limits(_min_x, _max_x, !from_left)
 		_remaining_spawn_limit -= bird_value
-		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " with direction: ", !from_left)
+		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " that goes left: ", !from_left)
 		spawn_attempts = 0
 	else:
 		push_error("Failed to instantiate bird from scene.")
@@ -120,16 +121,19 @@ func _scene_for_type(dragoon_t: Enums.dragoon_type) -> PackedScene:
 		_: return null
 
 
-func _on_bird_shot(bird: Node2D, hit_zone: Enums.hit_zone) -> void:
+func _on_bird_shot(bird: AnimatedSprite2D, hit_zone: Enums.hit_zone) -> void:
 	if !_can_shoot:
 		print("Cannot shoot, reloading or not allowed.")
 		return
+
 	if hit_zone == Enums.hit_zone.Head:
-		scored.emit(bird.value)
-		bird.queue_free()
+		if bird.is_sick:
+			scored.emit(bird.value)
+			bird.make_healthy()
+			pass
 		_on_screen_count = max(0, _on_screen_count - 1)
 	elif hit_zone == Enums.hit_zone.Body:
-		pass
+		pass # duplicate bird
 	else:
 		print("Unknown hit zone: ", hit_zone)
 

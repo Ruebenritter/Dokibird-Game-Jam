@@ -33,23 +33,18 @@ animations = [{
 
 [node name="BirdSprite" instance=ExtResource("1_ifc0t")]
 sprite_frames = SubResource("SpriteFrames_f0wdh")
-frame_progress = 0.0233058
+animation = &"sick"
+frame_progress = 0.440496
 distance_level = 10
 flightless_bird = true
 
-[node name="HeadArea" parent="." index="0"]
-visible = false
-
 [node name="CollisionPolygon2D" parent="HeadArea" index="0"]
-position = Vector2(1, 19)
-polygon = PackedVector2Array(31, 104, 73, 117, 127, 111, 157, 95, 114, 58, 85, 34, 78, 62, 68, 62, 65, 79, 44, 81, 43, 96)
-
-[node name="BodyArea" parent="." index="1"]
-visible = false
+position = Vector2(3, -2)
+polygon = PackedVector2Array(26, 122, 74, 133, 130, 128, 157, 95, 114, 58, 85, 34, 78, 62, 68, 62, 65, 79, 44, 81, 43, 96)
 
 [node name="CollisionPolygon2D" parent="BodyArea" index="0"]
-position = Vector2(0, 21)
-polygon = PackedVector2Array(-9, -180, -59, -160, -112, -108, -153, -38, -152, 35, -126, 80, -80, 109, -39, 120, 3, 114, 33, 103, 94, 42, 91, -11, 71, -94, 29, -154)
+position = Vector2(1, 6)
+polygon = PackedVector2Array(-9, -180, -59, -160, -114, -124, -153, -38, -152, 35, -129, 89, -84, 123, -39, 133, 6, 127, 39, 116, 94, 42, 91, -11, 71, -94, 29, -154)
 
 [node name="VisibleOnScreenNotifier2D" parent="." index="2"]
 position = Vector2(-7, 19)

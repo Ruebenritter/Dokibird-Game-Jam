@@ -33,12 +33,12 @@ animations = [{
 
 [node name="BirdSprite" instance=ExtResource("1_hp30c")]
 sprite_frames = SubResource("SpriteFrames_dplcn")
-frame_progress = 0.240369
+frame_progress = 0.323702
 dragoon_type = 2
 distance_level = 15
 
-[node name="CollisionPolygon2D" parent="HeadArea" index="0"]
-polygon = PackedVector2Array(-58, -51, 39, -22, 53, 64, -4, 89, -80, 100, -143, 65, -163, 12, -131, -39)
-
 [node name="CollisionPolygon2D" parent="BodyArea" index="0"]
 polygon = PackedVector2Array(-70, -143, -15, -195, 76, -217, 88, -187, 91, -137, 112, -151, 136, -153, 144, -115, 138, -82, 157, -66, 190, -11, 192, 44, 193, 94, 239, 104, 233, 126, 193, 154, 114, 192, 18, 210, -100, 189, -172, 155, -211, 101, -243, 45, -208, 13, -194, -39, -150, -95, -106, -130)
+
+[node name="CollisionPolygon2D" parent="HeadArea" index="0"]
+polygon = PackedVector2Array(-58, -51, 39, -22, 53, 64, -4, 89, -80, 100, -143, 65, -163, 12, -131, -39)
