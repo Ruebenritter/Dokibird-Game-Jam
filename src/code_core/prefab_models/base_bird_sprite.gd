@@ -48,7 +48,7 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 			flightless_bird = randi() % 2 == 0 # Randomly flightless or not
 		Enums.dragoon_type.Chonky:
 			flightless_bird = true
-			speed = Enums.speed_level.Idle
+			bird_speed = Enums.speed_level.Idle
 		_: return false
 
 	# chonky and egg are flightless and can only be near, mid or far
@@ -69,8 +69,8 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 			print("Distant distance is not allowed for any bird type.")
 			return false
 
-	# flying birds cannot be close
-	if not flightless_bird and distance == Enums.distance_level.Close:
+	# flying birds cannot be close or idle
+	if not flightless_bird and (distance == Enums.distance_level.Close or distance == Enums.speed_level.Idle):
 		print("Flying birds cannot be spawned at Close distance.")
 		return false
 
@@ -109,6 +109,10 @@ func try_construct(type: Enums.dragoon_type, distance: Enums.distance_level, bir
 
 	z_index = - distance_level + 1000
 
+	dragoon_type = type
+	distance_level = distance
+	speed = bird_speed
+
 	return true
 
 func _distance_to_scale() -> float:
@@ -124,6 +128,12 @@ func set_limits(left_x: float, right_x: float, goes_left: bool) -> void:
 	_map_border_left = left_x
 	_map_border_right = right_x
 	_goes_left = goes_left
+
+	# flip the sprite if it goes right
+	if not goes_left:
+		scale.x = - abs(scale.x)
+	else:
+		scale.x = abs(scale.x)
 
 func _move(delta: float, goes_left: bool) -> void:
 	if flightless_bird:

@@ -53,7 +53,6 @@ func _create_spawn_timer() -> void:
 	_regular_spawn_timer.start()
 
 func _on_spawn_timer_timeout() -> void:
-	print("Spawn timer triggered")
 	_try_spawn_bird()
 	if _remaining_spawn_limit <= 0 or spawn_attempts > 100:
 		_regular_spawn_timer.stop()
@@ -71,10 +70,10 @@ func _try_spawn_bird() -> void:
 
 
 	var bird_value = distance_level + dragoon_t + speed_level
-	print("Trying to spawn bird with value: ", bird_value)
 	var scene := _scene_for_type(dragoon_t)
 	if not scene:
 		print("No scene found for dragoon type: ", dragoon_t)
+		return
 	
 	var bird := scene.instantiate() as AnimatedSprite2D
 
@@ -99,15 +98,15 @@ func _try_spawn_bird() -> void:
 	if bird:
 		var spawn_data := _choose_spawn_outside_viewport()
 		var spawn_pos: Vector2 = spawn_data[0]
-		var dir: int = spawn_data[1]
+		var from_left: bool = spawn_data[1]
 
 		bird.global_position.x = spawn_pos.x
 		bird.connect("screen_visible", Callable(self, "_on_bird_screen_visible"))
 		bird.connect("shot", Callable(self, "_on_bird_shot"))
 		add_child(bird)
-		bird.set_limits(_min_x, _max_x, dir)
+		bird.set_limits(_min_x, _max_x, !from_left)
 		_remaining_spawn_limit -= bird_value
-		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " with direction: ", dir)
+		print("Spawned bird: ", bird.name, " at position: ", spawn_pos, " with direction: ", !from_left)
 		spawn_attempts = 0
 	else:
 		push_error("Failed to instantiate bird from scene.")
@@ -151,7 +150,7 @@ func _choose_spawn_outside_viewport() -> Array:
 	var from_left := randf() < 0.5
 	var x := rect.position.x - spawn_padding if from_left else rect.end.x + spawn_padding
 	var y := randf_range(rect.position.y, rect.position.y + rect.size.y)
-	return [Vector2(x, y), -1 if from_left else 1]
+	return [Vector2(x, y), from_left]
 
 func _visible_world_rect() -> Rect2:
 	var vp_size := get_viewport().get_visible_rect().size
