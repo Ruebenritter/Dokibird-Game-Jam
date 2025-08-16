@@ -126,18 +126,18 @@ func _reload() -> void:
 
 	_reloading = true
 	%BirdControl.set_can_shoot(false)
+	
 	_clear_ammo_items()
 
 	var wait_between_reload: float = reload_time / max_ammo
-
+	
+	_play_sound(_reload_sound)
 	for i in range(max_ammo):
-		await get_tree().create_timer(wait_between_reload).timeout
 		if _last_round:
 			_last_round.stop_blinking()
 		
 		var ammo_instance = ammo_scene.instantiate() as Dart
 		%AmmoRow.add_child(ammo_instance)
-		_play_sound(_reload_sound)
 		ammo_instance.blink()
 		_last_round = ammo_instance
 		
