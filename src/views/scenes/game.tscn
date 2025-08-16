@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://bh8551xlobrhx"]
+[gd_scene load_steps=20 format=3 uid="uid://bh8551xlobrhx"]
 
 [ext_resource type="Script" uid="uid://7qflgr7y8rr4" path="res://view_models/game_viewmodel.gd" id="1_h27ot"]
 [ext_resource type="PackedScene" uid="uid://c20f0w8iuf7v6" path="res://views/components/crosshair_sprite.tscn" id="2_tiy8y"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dqtd3sp3bkixu" path="res://views/components/lane_visuals.tscn" id="9_nmau5"]
 [ext_resource type="PackedScene" uid="uid://b5ir54suxdymc" path="res://views/prefabs/long_bird.tscn" id="9_sb8le"]
 [ext_resource type="PackedScene" uid="uid://mo8adwwypubx" path="res://views/prefabs/chonky_bird.tscn" id="10_jgi6j"]
+[ext_resource type="Texture2D" uid="uid://b7r67h321mp3p" path="res://assets/backgrounds/farm_sign.png" id="10_x01tu"]
 [ext_resource type="PackedScene" uid="uid://b5u4cgp6o5bij" path="res://views/prefabs/regular_bird.tscn" id="11_56iah"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ix16s"]
@@ -40,6 +41,17 @@ ammo_scene = ExtResource("3_dq4r2")
 camera_pan_speed = 500.0
 sounds = Array[Resource]([ExtResource("4_dq4r2"), ExtResource("5_nmau5"), ExtResource("6_mcyuj")])
 
+[node name="farm sign2" type="TextureRect" parent="."]
+z_index = 2
+layout_mode = 2
+offset_left = -1727.0
+offset_top = 59.0
+offset_right = 9843.0
+offset_bottom = 1139.0
+scale = Vector2(0.544851, 0.544851)
+pivot_offset = Vector2(-1283, 1003)
+texture = ExtResource("10_x01tu")
+
 [node name="Frame" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -48,6 +60,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+pivot_offset = Vector2(-828, -214)
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ix16s")
 
@@ -56,13 +69,13 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 
-[node name="special buildings" parent="Frame" instance=ExtResource("9_mcyuj")]
-z_index = 6
+[node name="Middleground" parent="Frame" instance=ExtResource("8_nmau5")]
+z_index = 2
 layout_mode = 2
 script = null
 
-[node name="Middleground" parent="Frame" instance=ExtResource("8_nmau5")]
-z_index = 2
+[node name="special buildings" parent="Frame" instance=ExtResource("9_mcyuj")]
+z_index = 6
 layout_mode = 2
 script = null
 
