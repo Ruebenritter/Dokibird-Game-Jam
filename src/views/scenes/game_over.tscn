@@ -1,8 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgvs1aoveoq78"]
+[gd_scene load_steps=8 format=3 uid="uid://bgvs1aoveoq78"]
 
 [ext_resource type="Texture2D" uid="uid://dmwiuxg2guhwj" path="res://assets/backgrounds/game_end_placeholder.png" id="1_7ylgo"]
 [ext_resource type="Script" uid="uid://bqvr4h7wrppqp" path="res://view_models/game_over.gd" id="1_t0cvf"]
 [ext_resource type="Texture2D" uid="uid://bsbblhbfciaej" path="res://assets/ui/RetryButton.png" id="2_xj8rf"]
+
+[sub_resource type="FontVariation" id="FontVariation_xl2ec"]
+
+[sub_resource type="Theme" id="Theme_t0cvf"]
+default_font = SubResource("FontVariation_xl2ec")
+default_font_size = 50
 
 [sub_resource type="SystemFont" id="SystemFont_t0cvf"]
 subpixel_positioning = 0
@@ -33,6 +39,7 @@ texture = ExtResource("1_7ylgo")
 
 [node name="RetryButtonTexture" type="TextureButton" parent="TextureRect"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -48,6 +55,25 @@ grow_vertical = 2
 scale = Vector2(2, 2)
 texture_normal = ExtResource("2_xj8rf")
 texture_pressed = ExtResource("2_xj8rf")
+
+[node name="Button" type="Button" parent="."]
+visible = false
+custom_minimum_size = Vector2(300, 150)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -229.0
+offset_top = 4.0
+offset_right = 71.0
+offset_bottom = 154.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.36, 1.36)
+theme = SubResource("Theme_t0cvf")
+text = "RETRY"
 
 [node name="ScoreLabel" type="Label" parent="."]
 unique_name_in_owner = true
