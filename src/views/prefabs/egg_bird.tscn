@@ -1,9 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4tmxwqrjhcdg"]
+[gd_scene load_steps=9 format=3 uid="uid://c4tmxwqrjhcdg"]
 
 [ext_resource type="PackedScene" uid="uid://rd67unskufc0" path="res://views/prefabs/base_bird_sprite.tscn" id="1_ifc0t"]
 [ext_resource type="Texture2D" uid="uid://b7sykyfl18qth" path="res://assets/character_sprites/egg_walk1.png" id="2_7ao1g"]
 [ext_resource type="Texture2D" uid="uid://lqu850cpkprs" path="res://assets/character_sprites/egg_walk2.png" id="3_1sm0w"]
 [ext_resource type="Texture2D" uid="uid://d2w365nfc8qc7" path="res://assets/character_sprites/egg_sick_walk1.png" id="4_6t6oi"]
+[ext_resource type="Texture2D" uid="uid://ckuj1medqc3mk" path="res://assets/character_sprites/egg_walk3.png" id="4_q1sop"]
+[ext_resource type="Texture2D" uid="uid://dd68xpfkf3ecx" path="res://assets/character_sprites/egg_walk4.png" id="5_5s58i"]
 [ext_resource type="Texture2D" uid="uid://fkd2rw6wqfke" path="res://assets/character_sprites/egg_sick_walk2.png" id="5_q1sop"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_f0wdh"]
@@ -14,6 +16,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("3_1sm0w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_q1sop")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5s58i")
 }],
 "loop": true,
 "name": &"default",
@@ -33,8 +41,7 @@ animations = [{
 
 [node name="BirdSprite" instance=ExtResource("1_ifc0t")]
 sprite_frames = SubResource("SpriteFrames_f0wdh")
-animation = &"sick"
-frame_progress = 0.440496
+frame_progress = 0.00457505
 distance_level = 10
 
 [node name="CollisionPolygon2D" parent="BodyArea" index="0"]
