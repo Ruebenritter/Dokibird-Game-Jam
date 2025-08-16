@@ -58,6 +58,7 @@ width = 5000.0
 
 [node name="MainCamera" type="Camera2D" parent="."]
 unique_name_in_owner = true
+limit_left = -4825
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
